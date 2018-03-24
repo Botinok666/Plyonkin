@@ -1,0 +1,20 @@
+@font-face {
+	font-family:IstokWeb; 
+	src:url(../fonts/IstokWeb-Regular.ttf)
+}
+@font-face {
+	font-family:DidactGothic; 
+	src:url(../fonts/DidactGothic.ttf)
+}
+@font-face {
+	font-family:HelveticaLight; 
+	src:url(../fonts/HelveticaLight.ttf)
+}
+@font-face {
+	font-family:OpenSans; 
+	src:url(../fonts/OpenSans.ttf)
+}
+@font-face {
+	font-family:Metropolis; 
+	src:url(../fonts/Metropolis-Bold.otf)
+}

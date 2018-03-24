@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<!-- Basic
+		================================================== -->
+		<meta charset="utf-8">
+		<!-- CSS
+		================================================== -->
+		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/feedback.css" rel="stylesheet" type="text/css">
+		<!-- JS
+		================================================== -->		
+		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="/scripts/pace.min.js"></script>
+		<script src="/scripts/main.js"></script>
+	</head>
+	<body>
+		<div class="logo">
+			<% include header %>
+		</div>
+		
+		<div class="row">
+		
+			<div class="column">
+			
+				<form name="cForm" id="cForm" method="post" action="">
+                   
+						<h1>Напишите нам!</h1>
+                        <div class="form-field">
+                            <input name="cName" type="text" id="cName" class="full-width" placeholder="Ваше имя" value="">
+                        </div>
+
+                        <div class="form-field">
+                            <input name="cEmail" type="text" id="cEmail" class="full-width" placeholder="Email" value="">
+                        </div>
+                        <div class="message form-field">
+                        <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Сообщение" ></textarea>
+                        </div>
+
+                        <button type="submit" class="submit btn btn--primary full-width">SUBMIT</button>
+
+                   
+                </form> <!-- end form -->	
+			</div>
+		</div>
+		<% include footer %>
+</body>
+</html>

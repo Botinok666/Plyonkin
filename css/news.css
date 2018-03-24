@@ -1,0 +1,125 @@
+.row {
+    box-sizing: border-box;
+	margin:0 auto 0 auto;
+	padding:20px 0 30px 0;
+	width:710px;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.column {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	float:left;
+}
+.comments {
+	width:97.2%;
+	height:110px;
+	background-color:white;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
+	position:relative;
+	margin:18px 14px 0 0;
+}
+.comments img {
+	top:0;
+	display: inline-block;
+	object-fit: cover;
+	width:110px;
+	height:100%;
+}
+.comments h4 {
+	width:82%;
+	color: rgb(80,120,255);
+		display: inline-block;
+	font:normal bold 14px IstokWeb; 
+	bottom:65px;
+		margin-left:8px;
+		border-bottom:1px solid silver;
+	position:absolute;
+
+}
+.comments p {
+			margin-left:8px;
+   line-height: 1rem;
+
+	top:15px;
+	display: inline-block;
+	position:absolute;
+	font:normal normal 13px IstokWeb; 
+	color:rgb(50,50,50);
+}
+.content {
+	background-color:white;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
+	position:relative;
+	margin:18px 20px 0 0;
+}
+.content a {
+	text-decoration:none;	
+	color: white;
+}
+.content p:hover {
+	text-decoration:none;	
+	background-color:silver;
+}
+.content p {
+	top:14px;
+	padding-top:10px;
+	background:#4C94FF;
+	text-align: center;
+	text-transform:uppercase;
+	height:35px;
+	font:normal bold 14px DidactGothic; 
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
+	position:relative;
+}
+.content h2 {
+ overflow: hidden; 
+	padding:4px 4px 4px 4px;
+	font:normal normal 14px HelveticaLight; 
+	/*		height: 72px;
+	*/
+text-justify: auto; 
+	position:relative;
+
+		margin-left:7px;
+	color:rgb(100,100,100);
+}
+.content h3 {
+		border-bottom:1px solid silver;
+		text-transform:uppercase;
+
+	padding:18px 4px 4px 4px;
+	font:normal normal 10px OpenSans; 
+
+	position:relative;
+	margin-top:95px;
+		margin-left:7px;
+	color:rgb(30,30,30);
+}
+.content h4 {
+	/*
+	height: 70px;
+	*/
+		text-transform:uppercase;
+			
+  overflow: hidden; 
+	padding:18px 4px 4px 4px;
+	font:normal bold 17px IstokWeb; 
+	top:105px;
+	position:relative;
+	margin-top:95px;
+		margin-left:7px;
+	color:rgb(30,30,30);
+}
+.content img {
+	object-fit: cover;
+	position:absolute;
+    top:0;
+    left:0;
+	width:100%;
+	height:210px;
+}
