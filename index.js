@@ -81,7 +81,7 @@ app.use('/fonts', express.static(__dirname + '/fonts'));
 app.use('/news', express.static(__dirname + '/views/news'));
 app.set('view engine', 'ejs');
 app.get('/',function(req,res) {
-    res.render('Main', {'root': __dirname + '/views'});
+    res.render('Main');
 });
 app.get('/titles/:tID', function(req, res) {
 	var sql = "SELECT fullDesc FROM news WHERE id=?";
@@ -101,7 +101,7 @@ app.get('/titles/:tID', function(req, res) {
 	});
 });
 app.get('/feedback',function(req,res) {
-    res.render('Feedback', {'root': __dirname + '/views'});
+    res.render('Feedback');
 });
 
 app.post('/show/:tID', function(req, res) {

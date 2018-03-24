@@ -4,8 +4,8 @@ body {
 	margin:0px 0px 0px 0px
 }
 .logo {
-	background:url(../images/hero-bg.png) no-repeat center center;
-	background-size:cover; 
+	background:url(/images/hero-bg.png) no-repeat center center;
+	background-size:cover;
 	padding:5px 0 0 0
 }
 .title {
@@ -59,7 +59,7 @@ body {
 	margin-bottom: 1.8rem;
 	color: rgba(255, 255, 255, 0.5);
 	border: none;
-	background: url(../images/1.svg) 20px center no-repeat, rgba(0, 0, 0, 0.1);
+	background: url(/images/1.svg) 20px center no-repeat, rgba(0, 0, 0, 0.1);
 	background-size: 24px 16px, auto;
 }
 #mc-form input[type=submit] {
