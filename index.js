@@ -68,7 +68,7 @@ con.connect(function(errc) {
 
 var express = require('express');
 var app = express();
-var fs = require('fs');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var pool = require('./scripts/dbpool');
 var textParser = bodyParser.text();
@@ -80,6 +80,12 @@ app.use('/images', express.static(__dirname + '/images'));
 app.use('/fonts', express.static(__dirname + '/fonts'));
 app.use('/news', express.static(__dirname + '/views/news'));
 app.set('view engine', 'ejs');
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.get('/',function(req,res) {
     res.render('Main');
 });
@@ -150,8 +156,17 @@ app.post('/load/:cnt', textParser, function(req, res) {
 		});
 	});
 });
+
+// Authentication and Authorization
 app.post('/api/register', textParser, login.regnew);
 app.post('/api/login', textParser, login.login);
+app.post('/api/logout', function(req, res) {
+	req.session.destroy();
+	res.sendStatus(200);
+});
+app.post('/api/auth', login.auth, function(req, res) {
+    res.send(JSON.stringify({ "uID": req.session.uID, "name": req.session.name }));
+});
 
 app.listen(80, function(){
     console.log('Node server running @ http://localhost')

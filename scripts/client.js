@@ -158,15 +158,37 @@ function regNew() {
 }
 
 function logOut() {
-	document.getElementById("loginarea").innerHTML = emptyLogin;
-	document.getElementById("sendBtn").disabled = true;
-	uID = -1;
-	uNm = "";
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("loginarea").innerHTML = emptyLogin;
+			document.getElementById("sendBtn").disabled = true;
+			uID = -1;
+			uNm = "";
+		}
+	};
+	xhttp.open("POST", "/api/logout", true);
+	xhttp.send(null);
 }
 
 function myLoad(tID) {
-	document.getElementById("loginarea").innerHTML = emptyLogin;
-	if (uID > -1)
-		document.getElementById("sendBtn").disabled = false;
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4) {
+			if (this.status == 200) {
+				var obj = JSON.parse(this.responseText);
+				uID = obj.uID;
+				uNm = obj.name;
+				document.getElementById("loginarea").innerHTML =
+					"<form>Вы вошли как " + obj.name + 
+					" <input type='button' onclick='logOut()' value='Выйти'></form>";
+				document.getElementById("sendBtn").disabled = false;
+			}
+			else
+				document.getElementById("loginarea").innerHTML = emptyLogin;
+		}
+	};
+	xhttp.open("POST", "/api/auth", true);
+	xhttp.send(null);
 	getComm(tID);
 }

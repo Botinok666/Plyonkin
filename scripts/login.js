@@ -1,7 +1,28 @@
 var pool = require('./dbpool');
 var bcrypt = require('bcrypt');
 module.exports = {
-	
+
+auth: function(req, res, next) {
+	if (req.session) {
+		pool.getConnection(function(error, con) {
+			var sql = 'SELECT name FROM users WHERE userID=?';
+			con.query(sql, [req.session.uID], function(err, result) {
+				con.release();
+				if (err)
+					console.log(err);
+				if (result.length > 0) {
+					if (result[0].name == req.session.name)
+						return next();
+					else
+						return res.sendStatus(401);
+				}
+				else
+					return res.sendStatus(401);
+			});
+		});
+	}
+},
+
 login: function(req, res) {
 	var time = new Date();
 	var udata = JSON.parse(req.body);
@@ -12,7 +33,6 @@ login: function(req, res) {
 			if (err)
 				console.log(err);
 			else if (result.length > 0) { //Пользователь найден - проверим его пароль
-				//console.log(result[0].userID);
 				bcrypt.compare(udata.password, result[0].password, function(errh, resh) {
 					if (resh == true) {
 						sql = 'UPDATE users SET loggedIn=' + time.getTime() + 
@@ -23,6 +43,8 @@ login: function(req, res) {
 								console.log(err);
 							rtext.text = "Вход выполнен";
 							rtext.uID = result[0].userID;
+							req.session.uID = result[0].userID;
+							req.session.name = udata.name;
 							res.send(JSON.stringify(rtext));
 						});
 					}
@@ -68,6 +90,8 @@ regnew: function(req, res) {
 					else {
 						rtext.uID = result.insertId;
 						console.log('New user ID: ' + rtext.uID);
+						req.session.uID = result.insertId;
+						req.session.name = udata.name;
 						rtext.text = "Регистрация прошла успешно";
 					}
 					if (res != null)
