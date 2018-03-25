@@ -7,19 +7,24 @@ var uPw = "";
 var uNm = "";
 var uID = -1;
 
-function getPreviewTitle(obj) {
-	var textRet = "<div class='content'>" +
-		"<a href='/titles/" + obj.id + "'><img class='imgcol' src='/images/" + obj.thumbImage + "'/></a>" +
-		"<h4>" + obj.title + "</h4> <h3>" + obj.name + "</h3> <h2>" + obj.shortDesc + "</h2>" +
-		"<a href='/titles/" + obj.id + "'> <p>Читать далее…</p></a></div> ";
-	return textRet;
+function putPreviewTitle(obj, elem) {
+	var divc = $('<div/>', { 'class': 'content' }).appendTo(elem);
+	var ac = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc);
+	var imgc = $('<img/>', { 'class': 'imgcol', 'src': '/images/' + obj.thumbImage }).appendTo(ac);
+	var h4c = $('<h4/>').html(obj.title).appendTo(divc);
+	var h3c = $('<h3/>').html(obj.name).appendTo(divc);
+	var h2c = $('<h2/>').html(obj.shortDesc).appendTo(divc);
+	var ac2 = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc);
+	var pc = $('<p/>').html('Читать далее…').appendTo(ac2);
 }
 
-function getComment(obj) {
+function putComment(obj, elem) {
 	var d = new Date(obj.commTimeMs);
-	var textRet = "<div class='comments'> <img class='imgcol' src='/images/" + obj.userPic +
-		".jpg'/> <h4>" + obj.name + " в " + d.toLocaleString() + "</h4> <p>" + obj.commText + "</p> </div>";
-	return textRet;
+	var divc = $('<div/>', { 'class': 'comments' }).appendTo(elem);
+	var imgc = $('<img/>', { 'class': 'imgcol', 
+		'src': '/images/' + obj.userPic + '.jpg'}).appendTo(divc);
+	var h4c = $('<h4/>').html(obj.name + " в " + d.toLocaleString()).appendTo(divc);
+	var pc = $('<p/>').html(obj.commText).appendTo(divc);
 }
 
 function loadMainPageTitles() {
@@ -29,10 +34,10 @@ function loadMainPageTitles() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			if (obj.length == newsCnt) {
-				document.getElementById("leftCol").innerHTML = getPreviewTitle(obj[3]);
-				document.getElementById("leftCol").innerHTML += getPreviewTitle(obj[2]);
-				document.getElementById("rightCol").innerHTML = getPreviewTitle(obj[1]);
-				document.getElementById("rightCol").innerHTML += getPreviewTitle(obj[0]);
+				putPreviewTitle(obj[3], document.getElementById("leftCol"));
+				putPreviewTitle(obj[2], document.getElementById("leftCol"));
+				putPreviewTitle(obj[1], document.getElementById("rightCol"));
+				putPreviewTitle(obj[0], document.getElementById("rightCol"));
 			}
 		}
 	};
@@ -45,13 +50,13 @@ function getComm(tID)	{
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
-			var textRet = "";
-			if (obj.length == 0)
-				textRet = "Комментариев пока нет, будьте первыми";
-			else for (x in obj) {
-				textRet += getComment(obj[x]);
+			$("comments").empty();
+			if (obj.length == 0) {
+				$("comments").html("Комментариев пока нет, будьте первыми");
 			}
-			document.getElementById("comments").innerHTML = textRet;
+			else for (x in obj) {
+				putComment(obj[x], document.getElementById("comments"));
+			}
 		}
 	};
 	xhttp.open("POST", "/show/" + tID, true);
