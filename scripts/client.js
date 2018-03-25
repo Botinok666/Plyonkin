@@ -74,7 +74,7 @@ function postComm(tID)	{
 	xhttp.open("POST", "/post/" + tID + "-" + uID, true);
 	xhttp.setRequestHeader("Content-type", "text/plain");
 	xhttp.send(document.getElementById("textfield").value);
-	document.getElementById("textfield").innerHTML = "";
+	document.getElementById("textfield").value = "";
 }
 
 function logIn() {

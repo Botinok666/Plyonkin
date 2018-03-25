@@ -1,26 +1,40 @@
 var pool = require('./dbpool');
 var bcrypt = require('bcrypt');
+var tokens = {}
+
+function insertToken(uID) {
+	var token = Math.random();
+	tokens.uID = token;
+	return token;
+}
+function removeToken(uID) {
+	if (tokens.uID != undefined)
+		tokens.uID = Math.random(); //Invalidate
+}
+function isTokenValid(uID, token) {
+	if (tokens.uID == undefined)
+		return false;
+	if (tokens.uID != token)
+		return false;
+	return true;
+}
+
 module.exports = {
 
 auth: function(req, res, next) {
 	if (req.session) {
-		pool.getConnection(function(error, con) {
-			var sql = 'SELECT name FROM users WHERE userID=?';
-			con.query(sql, [req.session.uID], function(err, result) {
-				con.release();
-				if (err)
-					console.log(err);
-				if (result.length > 0) {
-					if (result[0].name == req.session.name)
-						return next();
-					else
-						return res.sendStatus(401);
-				}
-				else
-					return res.sendStatus(401);
-			});
-		});
+		if (isTokenValid(req.session.uID, req.session.token))
+			{ return next(); }
+		return res.sendStatus(401);
 	}
+},
+
+unauth: function(req, res, next) {
+	if (req.session) {
+		removeToken(req.session.uID);
+		return next();
+	}
+	return res.sendStatus(401);
 },
 
 login: function(req, res) {
@@ -43,8 +57,9 @@ login: function(req, res) {
 								console.log(err);
 							rtext.text = "Вход выполнен";
 							rtext.uID = result[0].userID;
-							req.session.uID = result[0].userID;
+							req.session.uID = result[0].userID; //Добавим информацию о юзере в сессию
 							req.session.name = udata.name;
+							req.session.token = insertToken(result[0].userID); //Токен - случайное число
 							res.send(JSON.stringify(rtext));
 						});
 					}
@@ -90,8 +105,9 @@ regnew: function(req, res) {
 					else {
 						rtext.uID = result.insertId;
 						console.log('New user ID: ' + rtext.uID);
-						req.session.uID = result.insertId;
+						req.session.uID = result.insertId; //Добавим информацию о юзере в сессию
 						req.session.name = udata.name;
+						req.session.token = insertToken(result.insertId); //Токен - случайное число
 						rtext.text = "Регистрация прошла успешно";
 					}
 					if (res != null)

@@ -160,7 +160,7 @@ app.post('/load/:cnt', textParser, function(req, res) {
 // Authentication and Authorization
 app.post('/api/register', textParser, login.regnew);
 app.post('/api/login', textParser, login.login);
-app.post('/api/logout', function(req, res) {
+app.post('/api/logout', login.unauth, function(req, res) {
 	req.session.destroy();
 	res.sendStatus(200);
 });
