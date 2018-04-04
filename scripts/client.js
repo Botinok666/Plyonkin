@@ -4,8 +4,14 @@ var emptyLogin = "<form>Логин: <input id='uName' type='text'>" +
 	" <input type='button' id='Register' onclick='regNew()' value='Новый пользователь'>" +
 	"</form><p id='logInfo'>Войдите, чтобы оставить комментарий</p>";
 var uPw = "";
-var uNm = "";
 var uID = -1;
+
+function showLogOut(uname, elem) {
+	$(elem).empty();
+	var form0 = $('<form/>').html('Вы вошли как ').appendTo(elem);
+	var a0 = $('<a/>', { 'href': '/profile' }).html(uname).appendTo(form0);
+	var input0 = $('<input/>', { 'type': 'button', 'onclick': 'logOut()', 'value': 'Выйти' }).appendTo(form0);
+}
 
 function putPreviewTitle(obj, elem) {
 	var divc = $('<div/>', { 'class': 'content' }).appendTo(elem);
@@ -21,8 +27,10 @@ function putPreviewTitle(obj, elem) {
 function putComment(obj, elem) {
 	var d = new Date(obj.commTimeMs);
 	var divc = $('<div/>', { 'class': 'comments' }).appendTo(elem);
+	if (obj.userPic == null)
+		obj.userPic = 'null.jpg';
 	var imgc = $('<img/>', { 'class': 'imgcol', 
-		'src': '/images/' + obj.userPic + '.jpg'}).appendTo(divc);
+		'src': '/images/' + obj.userPic}).appendTo(divc);
 	var h4c = $('<h4/>').html(obj.name + " в " + d.toLocaleString()).appendTo(divc);
 	var pc = $('<p/>').html(obj.commText).appendTo(divc);
 }
@@ -34,10 +42,10 @@ function loadMainPageTitles() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			if (obj.length == newsCnt) {
-				putPreviewTitle(obj[3], document.getElementById("leftCol"));
-				putPreviewTitle(obj[2], document.getElementById("leftCol"));
-				putPreviewTitle(obj[1], document.getElementById("rightCol"));
-				putPreviewTitle(obj[0], document.getElementById("rightCol"));
+				putPreviewTitle(obj[3], $("#leftCol"));
+				putPreviewTitle(obj[2], $("#leftCol"));
+				putPreviewTitle(obj[1], $("#rightCol"));
+				putPreviewTitle(obj[0], $("#rightCol"));
 			}
 		}
 	};
@@ -50,12 +58,12 @@ function getComm(tID)	{
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
-			$("comments").empty();
+			$("#comments").empty();
 			if (obj.length == 0) {
-				$("comments").html("Комментариев пока нет, будьте первыми");
+				$("#comments").html("Комментариев пока нет, будьте первыми");
 			}
 			else for (x in obj) {
-				putComment(obj[x], document.getElementById("comments"));
+				putComment(obj[x], $("#comments"));
 			}
 		}
 	};
@@ -98,11 +106,8 @@ function logIn() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			uID = obj.uID;
-			uNm = document.getElementById("uName").value;
 			if (obj.uID > -1) {
-				document.getElementById("loginarea").innerHTML =
-					"<form>Вы вошли как " + uNm + 
-					" <input type='button' onclick='logOut()' value='Выйти'></form>";
+				showLogOut(document.getElementById("uName").value, document.getElementById("loginarea"));
 				document.getElementById("sendBtn").disabled = false;
 			}
 			else
@@ -147,10 +152,7 @@ function regNew() {
 			var obj = JSON.parse(this.responseText);
 			uID = obj.uID;
 			if (obj.uID > -1) {
-				uNm = document.getElementById("uName").value;
-				document.getElementById("loginarea").innerHTML =
-					"<form>Вы вошли как " + uNm + 
-					" <input type='button' onclick='logOut()' value='Выйти'></form>";
+				showLogOut(document.getElementById("uName").value, document.getElementById("loginarea"));
 				document.getElementById("sendBtn").disabled = false;
 			}
 			else
@@ -169,7 +171,6 @@ function logOut() {
 			document.getElementById("loginarea").innerHTML = emptyLogin;
 			document.getElementById("sendBtn").disabled = true;
 			uID = -1;
-			uNm = "";
 		}
 	};
 	xhttp.open("POST", "/api/logout", true);
@@ -183,10 +184,7 @@ function myLoad(tID) {
 			if (this.status == 200) {
 				var obj = JSON.parse(this.responseText);
 				uID = obj.uID;
-				uNm = obj.name;
-				document.getElementById("loginarea").innerHTML =
-					"<form>Вы вошли как " + obj.name + 
-					" <input type='button' onclick='logOut()' value='Выйти'></form>";
+				showLogOut(obj.name, document.getElementById("loginarea"));
 				document.getElementById("sendBtn").disabled = false;
 			}
 			else

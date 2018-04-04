@@ -13,8 +13,13 @@
 		<script src="/scripts/jquery-3.2.1.min.js"></script>
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/main.js"></script>
+		<script>
+			function pageLoaded() {
+				document.getElementById('hfeedback').className = 'active';
+			}
+		</script>
 	</head>
-	<body>
+	<body onload='pageLoaded()'>
 		<div class="logo">
 			<% include header %>
 		</div>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<!-- Basic
+		================================================== -->
+		<meta charset="utf-8">
+		<!-- CSS
+		================================================== -->
+		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/news.css" rel="stylesheet" type="text/css">
+		<!-- JS
+		================================================== -->		
+		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="/scripts/pace.min.js"></script>
+		<script src="/scripts/main.js"></script>
+		<script src="/scripts/profile.js"></script>
+		<script>
+			function profileLoad() {
+				var ulStatus = <%= ulStatus %>;
+				if (ulStatus == false)
+					window.alert('Загрузка не выполнена');
+				if (ulStatus == true)
+					window.alert('Загрузка выполнена!');
+				pLoad();
+			}
+		</script>
+	</head>
+	<body onload='profileLoad()'>
+
+		<div class="logo">
+			<% include header %>
+		</div>
+
+		<div id='pcontent' class="row"></div>
+		<% include footer %>
+</body>
+</html>
