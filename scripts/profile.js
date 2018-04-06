@@ -12,9 +12,9 @@ function showNewsUploadForm(elem) {
 	var form0 = $('<form/>', { 'action': '/uploadNews', 'enctype': 'multipart/form-data',
 		'method': 'post'}).html('Загрузка новости').appendTo(elem);
 	$(form0).append('<br>Заголовок');
-	var input0 = $('<input>', { 'name': 'ntitle', 'type': 'text' }).appendTo(form0);
+	var input0 = $('<input>', { 'name': 'ntitle', 'type': 'text', 'maxlength': '90' }).appendTo(form0);
 	$(form0).append('<br>Краткое содержание');
-	var input1 = $('<input>', { 'name': 'ndescr', 'type': 'text' }).appendTo(form0);
+	var input1 = $('<input>', { 'name': 'ndescr', 'type': 'text', 'maxlength': '120' }).appendTo(form0);
 	$(form0).append('<br>Картинка новости');
 	var input2 = $('<input>', { 'name': 'imageUp', 'type': 'file', 
 		'accept': 'image/*' }).appendTo(form0);

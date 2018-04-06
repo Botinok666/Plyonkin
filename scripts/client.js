@@ -42,10 +42,10 @@ function loadMainPageTitles() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			if (obj.length == newsCnt) {
-				putPreviewTitle(obj[3], $("#leftCol"));
-				putPreviewTitle(obj[2], $("#leftCol"));
-				putPreviewTitle(obj[1], $("#rightCol"));
-				putPreviewTitle(obj[0], $("#rightCol"));
+				putPreviewTitle(obj[0], $("#leftCol"));
+				putPreviewTitle(obj[1], $("#leftCol"));
+				putPreviewTitle(obj[2], $("#rightCol"));
+				putPreviewTitle(obj[3], $("#rightCol"));
 			}
 		}
 	};

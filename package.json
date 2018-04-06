@@ -19,4 +19,8 @@
   },
   "author": "",
   "license": "ISC"
+  "repository": {
+  "type": "git",
+  "url": "git://github.com/Botinok666/Plyonkin.git"
+  }
 }

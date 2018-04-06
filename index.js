@@ -42,8 +42,8 @@ con.connect(function(errc) {
 		console.log("Table comments linked");
 	});
 	sql = "CREATE TABLE IF NOT EXISTS news (id INT AUTO_INCREMENT PRIMARY KEY, " +
-		"authorID INT, title VARCHAR(90), shortDesc VARCHAR(90), fullDesc VARCHAR(30), " + 
-		"thumbImage VARCHAR(30), createdTime DATETIME DEFAULT CURRENT_TIMESTAMP) " + 
+		"authorID INT, title VARCHAR(90), shortDesc VARCHAR(120), fullDesc VARCHAR(30), " + 
+		"thumbImage VARCHAR(45), createdTime DATETIME DEFAULT CURRENT_TIMESTAMP) " + 
 		"CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 	con.query(sql, function (err, result) {
 		if (err) throw err;

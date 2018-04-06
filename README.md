@@ -14,3 +14,5 @@
 Новости добавляются пока довольно топорно, порядок действий примерно такой: оформляешь новость в виде кусочка html кода, сохраняешь её в папке views/news с расширением ejs, потом добавляешь запись в БД с заголовком, кратким описанием, названием картинки и названием файла ejs (поля id и time заполнять не нужно, их заполняет mysql)
 
 alter table users add accLevel tinyint default 0;
+alter table news modify column shortdesc varchar(120);
+alter table news modify column thumbimage varchar(45);
