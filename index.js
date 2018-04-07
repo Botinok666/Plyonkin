@@ -29,7 +29,7 @@ con.connect(function(errc) {
 				login.regnew(req, null);
 				req = { "body": JSON.stringify({ 'name': 'Николай Закоморный', 'password': '67890' })}
 				login.regnew(req, null);
-				req = { "body": JSON.stringify({ 'name': 'Григорий Зотенко', 'password': 'abcde' })}
+				req = { "body": JSON.stringify({ 'name': 'Григорий Зотенко', 'password': 'zxcvb' })}
 				login.regnew(req, null);
 			}
 		});		
@@ -56,12 +56,28 @@ con.connect(function(errc) {
 				var values = [
 				[1, 'Ошибка в MACOS, IOS и WATCHOS позволяет рушить…', 'Краткое описание 1', 'macos.ejs', '2.jpg'],
 				[1, 'Смартфон XIAOMI MI MIX 2S засветился в первом видео', 'Краткое описание 2', 'xiaomi1.ejs', '1.jpg'],
-				[2, 'IOS 11.3: Была выпущена бета-версия для разработчиков и тестров', 'Краткое описание 3', 'ios113.ejs', 'ios-logo-icon-100733550.jpg'],
+				[2, 'IOS 11.3: Была выпущена бета-версия для разработчиков', 'Краткое описание 3', 'ios113.ejs', 'ios-logo-icon-100733550.jpg'],
 				[1, 'Зачем тебе уши, если ты не слушаешь Антона Другалева?', 'Краткое описание 4', 'master.ejs', 'V-sIxy4oW4g.jpg']
 				];
 				con.query(isql, [values], function(errq, resq) {
 					if (errq) throw errq;
 					console.log("Добавлено новостей: " + resq.affectedRows);
+				});
+			}
+		});
+	});
+	sql = "CREATE TABLE IF NOT EXISTS extraId (id INT AUTO_INCREMENT PRIMARY KEY, " +
+		"type VARCHAR(45), titleID INT DEFAULT 1) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
+	con.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log("Table extraId linked");
+		con.query("SELECT id FROM extraId LIMIT 5", function (erro, res) {
+			if (erro) throw erro;
+			if (res.length < 1) {
+				var isql = "INSERT INTO extraId (type, titleID) VALUES (?)";
+				con.query(isql, [['Main title', 1]], function(errq, resq) {
+					if (errq) throw errq;
+					console.log("Добавлено extraId: " + resq.affectedRows);
 				});
 			}
 		});
@@ -143,9 +159,13 @@ app.post('/show/:tID', function(req, res) {
 		});
 	});
 });
-app.post('/post/:tID-:uID', textParser, function(req, res) {
-	var d = new Date();
-	var comm = [req.params.tID, req.params.uID, d.getTime(), req.body];
+app.post('/post/:tID', textParser, function(req, res) {
+	if (req.session.uID == null) {
+		res.sendStatus(401);
+		return;
+	}
+	var d = new Date();	
+	var comm = [req.params.tID, req.session.uID, d.getTime(), req.body];
 	var sql = "INSERT INTO comments (titleID, userID, commTimeMs, commText) VALUES (?)";
 	pool.getConnection(function(error, con) {	
 		con.query(sql, [comm], function (err, result) {
@@ -158,20 +178,29 @@ app.post('/post/:tID-:uID', textParser, function(req, res) {
 	});
 });
 app.post('/load/:cnt', textParser, function(req, res) {
-	var sql = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage " + 
-		"FROM news LEFT JOIN users ON users.userID=news.authorID ORDER BY news.id DESC LIMIT " +
-		req.params.cnt;
-	var textRet = "";		
+	var sql = "SELECT titleID FROM extraId WHERE type='Main title'";
 	pool.getConnection(function(error, con) {
 		con.query(sql, function(err, result) {
-			con.release();
 			if (err)
 				console.log(err);
-			textRet = JSON.stringify(result);
-			res.type('text/plain');
-			res.send(textRet);
+			var sql2 = '';
+			if (req.params.cnt < 1) {
+				sql2 = "SELECT id, title, shortDesc, thumbImage FROM news " +
+					"WHERE id=" + result[0].titleID;
+			} else {
+				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage " + 
+					"FROM news LEFT JOIN users ON users.userID=news.authorID WHERE news.id<>" + 
+					result[0].titleID + " ORDER BY news.id DESC LIMIT " + req.params.cnt;
+			}
+			con.query(sql2, function(err2, result2) {
+				con.release();
+				if (err2)
+					console.log(err2);	
+				res.type('text/plain');
+				res.send(JSON.stringify(result2));				
+			});
 		});
-	});
+	});	
 });
 // Uploading section
 app.post('/uploadPic', function(req, res) {
@@ -255,7 +284,37 @@ app.post('/api/logout', login.unauth, function(req, res) {
 app.post('/api/auth', login.auth, function(req, res) {
     res.send(JSON.stringify({ "uID": req.session.uID, "name": req.session.name }));
 });
-app.post('/api/profile', login.auth,function(req, res) {
+app.post('/api/params', login.auth, textParser, function(req, res) {
+	var uparams = JSON.parse(req.body);
+	if (uparams.tID != null) {
+		var sql = 'SELECT authorID FROM news WHERE id=?';
+		pool.getConnection(function(error, con) {
+			con.query(sql, [uparams.tID], function(err, result) {
+				if (err)
+					console.log(err);				
+				if (result.length > 0)
+				{
+					var sql2 = "UPDATE extraId SET titleID=? WHERE type='Main title'";
+					con.query(sql2, [uparams.tID], function(error2, result2) {
+						con.release();
+						if (error2)
+							console.log(error2);
+						res.type('text/plain');
+						res.send(JSON.stringify({ "tID": uparams.tID }));						
+					});
+				} else {
+					con.release();
+					res.type('text/plain');
+					res.send(JSON.stringify({ "tID": -1 }));
+				}
+			});
+		});			
+	} else {
+		res.type('text/plain');
+		res.send(JSON.stringify({ "tID": -1 }));		
+	}
+});
+app.post('/api/profile', login.auth, function(req, res) {
 	var sql = 'SELECT accLevel FROM users WHERE userID=?';
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.session.uID], function(err, result) {

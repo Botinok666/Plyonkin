@@ -7,9 +7,8 @@ function insertToken(uID) {
 	tokens.uID = token;
 	return token;
 }
-function removeToken(uID) {
-	if (tokens.uID != undefined)
-		tokens.uID = Math.random(); //Invalidate
+function removeToken(uID) { 
+	tokens.uID = Math.random(); //Invalidate
 }
 function isTokenValid(uID, token) {
 	if (tokens.uID == undefined)
