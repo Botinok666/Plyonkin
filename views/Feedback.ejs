@@ -1,15 +1,18 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 	<head>
 		<!-- Basic
 		================================================== -->
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<!-- CSS
 		================================================== -->
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
-		<link href="/css/feedback.css" rel="stylesheet" type="text/css">
+		<link href="/css/main.css" rel="stylesheet" type="text/css">
+		<link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<!-- JS
-		================================================== -->		
+		================================================== -->
 		<script src="/scripts/jquery-3.2.1.min.js"></script>
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/main.js"></script>
@@ -23,13 +26,13 @@
 		<div class="logo">
 			<% include header %>
 		</div>
-		
+
 		<div class="row">
-		
+
 			<div class="column">
-			
+
 				<form name="cForm" id="cForm" method="post" action="">
-                   
+
 						<h1>Напишите нам!</h1>
                         <div class="form-field">
                             <input name="cName" type="text" id="cName" class="full-width" placeholder="Ваше имя" value="">
@@ -44,10 +47,13 @@
 
                         <button type="submit" class="submit btn btn--primary full-width">SUBMIT</button>
 
-                   
-                </form> <!-- end form -->	
+
+                </form> <!-- end form -->
 			</div>
 		</div>
 		<% include footer %>
 </body>
+
+<!-- asset bootstrap -->
+<script src="/assets/js/bootstrap.min.js" type="application/javascript"></script>
 </html>
