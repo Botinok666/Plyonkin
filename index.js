@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var con = mysql.createConnection({
-  host: "127.0.0.1",
+  host: "192.168.10.97",
   user: "stduser",
   password: "p55-cd53"
 });
@@ -82,6 +82,12 @@ con.connect(function(errc) {
 			}
 		});
 	});
+	sql = "CREATE TABLE IF NOT EXISTS subscribers (id INT AUTO_INCREMENT PRIMARY KEY, " +
+		"email VARCHAR(90)) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
+	con.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log("Table subscribers linked");
+	});	
 });
 
 var express = require('express');
@@ -92,6 +98,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var pool = require('./scripts/dbpool');
+var smtp = require('./scripts/smtp');
 var textParser = bodyParser.text();
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use('/style', express.static(__dirname + '/style'));
@@ -111,14 +118,20 @@ app.get('/',function(req,res) {
     res.render('Main');
 });
 app.get('/titles/:tID', function(req, res) {
-	var sql = "SELECT fullDesc FROM news WHERE id=?";
+	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name FROM news "
+		+ "RIGHT JOIN users ON news.authorID=users.userID WHERE news.id=?";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
 			con.release();
 			if (err)
 				console.log(err);
-			res.render('News', { title: "news/" + result[0].fullDesc, tID: req.params.tID }, 
-			function(errs, thtml) {
+			res.render('News', { 
+				title: "news/" + result[0].fullDesc, 
+				tID: req.params.tID,
+				nImage: '/images/' + result[0].thumbImage,
+				nTitle: result[0].title,
+				nAuthor: result[0].name
+				}, function(errs, thtml) {
 				if (errs)
 					console.log(errs);
 				else
@@ -146,7 +159,7 @@ app.get('/profile', function(req, res) {
 app.post('/show/:tID', function(req, res) {
 	var sql = "SELECT users.name, users.userPic, comments.commTimeMs, comments.commText "
 		+ "FROM comments LEFT JOIN users ON users.userID=comments.userID "
-		+ "WHERE comments.titleID=?";
+		+ "WHERE comments.titleID=? ORDER BY comments.commTimeMs DESC";
 	var textRet = "";		
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
@@ -227,7 +240,10 @@ app.post('/uploadPic', function(req, res) {
 						res.redirect('/Profile?result=false');
 					}
 					else
+					{
 						res.redirect('/Profile?result=true');
+						//smtp.notify('Test', 10);
+					}
 				});
 			});
 		});
@@ -267,7 +283,10 @@ app.post('/uploadNews', function(req, res) {
 							res.redirect('/Profile?result=false');
 						}
 						else
+						{
 							res.redirect('/Profile?result=true');
+							smtp.notify(fields.ntitle, result.insertId);
+						}
 					});
 				});
 			});
@@ -330,7 +349,10 @@ app.post('/api/profile', login.auth, function(req, res) {
 		});
 	});	
 });
+//Mailing
+app.post('/api/feedback', textParser, smtp.feedback);
+app.post('/api/subscribe', textParser, smtp.subscribe);
 
-app.listen(80, function(){
-    console.log('Node server running @ http://localhost')
+app.listen(1666, function(){
+    console.log('Node server running @ http://localhost:1666')
 });

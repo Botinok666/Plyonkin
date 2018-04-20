@@ -11,16 +11,17 @@
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
     "jsonwebtoken": "^7.4.3",
-    "mysql": "^2.13.0"
+    "mysql": "^2.13.0",
+    "nodemailer": "^4.6.4"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
   "repository": {
-  "type": "git",
-  "url": "git://github.com/Botinok666/Plyonkin.git"
+    "type": "git",
+    "url": "git://github.com/Botinok666/Plyonkin.git"
   }
 }
