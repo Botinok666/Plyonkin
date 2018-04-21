@@ -4,6 +4,7 @@ function showLogIn(elem) {
 	var input0 = $('<input/>', { 'id': 'uname', 'type': 'text' }).appendTo(form0);
 	$(form0).append('Пароль: ');
 	var input1 = $('<input/>', { 'id': 'psw', 'type': 'password' }).appendTo(form0);
+	var input2 = $('<input/>', { 'id': 'Login', 'type': 'button',
 		'onclick': 'logIn()', 'value': 'Войти' }).appendTo(form0);
 	var input3 = $('<input/>', { 'id': 'Register', 'type': 'button',
 		'onclick': 'regNew()', 'value': 'Новый пользователь' }).appendTo(form0);
