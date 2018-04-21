@@ -4,9 +4,8 @@ function showLogIn(elem) {
 	var input0 = $('<input/>', { 'id': 'uname', 'type': 'text' }).appendTo(form0);
 	$(form0).append('Пароль: ');
 	var input1 = $('<input/>', { 'id': 'psw', 'type': 'password' }).appendTo(form0);
-	var input2 = $('<input/>', { 'id': 'Login', 'type': 'button', 
 		'onclick': 'logIn()', 'value': 'Войти' }).appendTo(form0);
-	var input3 = $('<input/>', { 'id': 'Register', 'type': 'button', 
+	var input3 = $('<input/>', { 'id': 'Register', 'type': 'button',
 		'onclick': 'regNew()', 'value': 'Новый пользователь' }).appendTo(form0);
 	var p0 = $('<p/>', { 'id': 'logInfo' }).html('Войдите, чтобы оставить комментарий').appendTo(elem);
 }
@@ -34,7 +33,7 @@ function putComment(obj, elem) {
 	var divc = $('<div/>', { 'class': 'comments' }).appendTo(elem);
 	if (obj.userPic == null)
 		obj.userPic = 'null.jpg';
-	var imgc = $('<img/>', { 'class': 'imgcol', 
+	var imgc = $('<img/>', { 'class': 'imgcol',
 		'src': '/images/' + obj.userPic }).appendTo(divc);
 	var h4c = $('<h4/>').html(obj.name + " в " + d.toLocaleString()).appendTo(divc);
 	var pc = $('<p/>').html(obj.commText).appendTo(divc);
@@ -48,7 +47,7 @@ function loadHeadTitle() {
 			var obj = JSON.parse(this.responseText);
 			if (obj.length > 0) {
 				var a0 = $('<a/>', { 'href': '/titles/' + obj[0].id }).appendTo($('.main_news'));
-				var img0 = $('<img/>', { 'class': 'gek', 
+				var img0 = $('<img/>', { 'class': 'gek',
 					'src': '/images/' + obj[0].thumbImage }).appendTo(a0);
 				var h3c = $('<h3/>').appendTo($('.main_news'));
 				var a1 = $('<a/>', { 'href': '/titles/' + obj[0].id }).html(obj[0].title).appendTo(h3c);
@@ -57,7 +56,7 @@ function loadHeadTitle() {
 		}
 	};
 	xhttp.open("POST", "/load/0", true);
-	xhttp.send(null);	
+	xhttp.send(null);
 }
 
 function loadMainPageTitles() {
@@ -71,19 +70,19 @@ function loadMainPageTitles() {
 				putPreviewTitle(obj[1], $("#leftCol"));
 				putPreviewTitle(obj[2], $("#rightCol"));
 				putPreviewTitle(obj[3], $("#rightCol"));
-				$(document).ready(function(){ 
-					$('.main_news').mouseout(function(){ 
-						$('.gek').stop().animate({opacity:'0.35'},600); 
-					}); 
-					$('.main_news').mouseover(function(){ 
-						$('.gek').stop().animate({opacity:'0.7'},300); 
-					}); 
-					$('.imgcol').mouseout(function(){ 
-						$(this).stop().animate({opacity:'1'},600); 
-					}); 
-					$('.imgcol').mouseover(function(){ 
-						$(this).stop().animate({opacity:'0.35'},300); 
-					}); 		
+				$(document).ready(function(){
+					$('.main_news').mouseout(function(){
+						$('.gek').stop().animate({opacity:'0.35'},600);
+					});
+					$('.main_news').mouseover(function(){
+						$('.gek').stop().animate({opacity:'0.7'},300);
+					});
+					$('.imgcol').mouseout(function(){
+						$(this).stop().animate({opacity:'1'},600);
+					});
+					$('.imgcol').mouseover(function(){
+						$(this).stop().animate({opacity:'0.35'},300);
+					});
 				});
 			}
 		}
