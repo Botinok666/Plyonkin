@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var con = mysql.createConnection({
-  host: "192.168.10.97",
+  host: "localhost",
   user: "stduser",
   password: "p55-cd53"
 });
@@ -132,8 +132,6 @@ app.get('/titles/:tID', function(req, res) {
 				nTitle: result[0].title,
 				nAuthor: result[0].name
 				}, function(errs, thtml) {
-			res.render('News', { title: "news/" + result[0].fullDesc, tID: req.params.tID },
-			function(errs, thtml) {
 				if (errs)
 					console.log(errs);
 				else
@@ -162,8 +160,6 @@ app.post('/show/:tID', function(req, res) {
 	var sql = "SELECT users.name, users.userPic, comments.commTimeMs, comments.commText "
 		+ "FROM comments LEFT JOIN users ON users.userID=comments.userID "
 		+ "WHERE comments.titleID=? ORDER BY comments.commTimeMs DESC";
-	var textRet = "";		
-		+ "WHERE comments.titleID=?";
 	var textRet = "";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
@@ -359,7 +355,4 @@ app.post('/api/subscribe', textParser, smtp.subscribe);
 
 app.listen(1666, function(){
     console.log('Node server running @ http://localhost:1666')
-});
-app.listen(80, function(){
-    console.log('Node server running @ http://localhost')
 });
