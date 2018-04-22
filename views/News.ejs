@@ -1,15 +1,22 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 	<head>
 		<!-- Basic
 		================================================== -->
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<!-- CSS
 		================================================== -->
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/main.css" rel="stylesheet" type="text/css">
+		<link href="/css/media.css" rel="stylesheet" type="text/css">
 		<link href="/css/news.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
 		<!-- JS
-		================================================== -->		
+		================================================== -->
 		<script src="/scripts/jquery-3.2.1.min.js"></script>
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/main.js"></script>
@@ -25,22 +32,33 @@
 			<% include header %>
 		</div>
 
-		<div class="row">
-			<div class="column">
-				<div id='tContent' class="content">
-				<img class='imgcol' src='<%= nImage %>'/>
-				<h4><%= nTitle %></h4>
-				<h3><%= nAuthor %></h3>
-				<%- include(title) %>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-3 col-md-1"></div>
+					<div class="col-lg-6 col-md-10 col-sm-12">
+						<div class="column">
+							<div id='tContent' class="content">
+							<%- include(title) %>
+							</div>
+							<p id='loginarea'>Jackety-jack</p>
+							<p id='comments'></p>
+							<textarea id="textfield" name="textfield" type="text" rows="8" columns="32"
+							placeholder="Напечатайте свой комментарий здесь..."></textarea>
+							<br>
+							<button id="sendBtn" onclick='postComm(tID)' disabled>Отправить</button>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-1"></div>
 				</div>
-				<p id='loginarea'>Jackety-jack</p>
-				<p id='comments'></p>
-				<textarea id="textfield" name="textfield" type="text" rows="8"
-					placeholder="Напечатайте свой комментарий здесь..."></textarea>
-				<br>
-				<button id="sendBtn" onclick='postComm(tID)' disabled>Отправить</button>
+
 			</div>
-		</div>
 		<% include footer %>
 </body>
+
+<!-- asset bootstrap -->
+<!-- <script src="/assets/js/bootstrap.min.js" type="application/javascript"></script> -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </html>
+
