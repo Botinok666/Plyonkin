@@ -11,6 +11,7 @@
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
 		<link href="/css/main.css" rel="stylesheet" type="text/css">
 		<link href="/css/media.css" rel="stylesheet" type="text/css">
+		<link href="/css/news.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
@@ -30,19 +31,25 @@
 			<% include header %>
 		</div>
 
-		<div class="roww">
-			<div class="column">
-				<div id='tContent' class="content">
-				<%- include(title) %>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-2 col-md-1"></div>
+					<div class="col-lg-8 col-md-10 col-sm-12">
+						<div class="column">
+							<div id='tContent' class="content">
+							<%- include(title) %>
+							</div>
+							<p id='loginarea'>Jackety-jack</p>
+							<p id='comments'></p>
+							<textarea id="textfield" name="textfield" type="text" rows="8" columns="32"
+							placeholder="Напечатайте свой комментарий здесь..."></textarea>
+							<br>
+							<button id="sendBtn" onclick='postComm(tID)' disabled>Отправить</button>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-1"></div>
 				</div>
-				<p id='loginarea'>Jackety-jack</p>
-				<p id='comments'></p>
-				<textarea id="textfield" name="textfield" type="text" rows="8" columns="32"
-					placeholder="Напечатайте свой комментарий здесь..."></textarea>
-				<br>
-				<button id="sendBtn" onclick='postComm(tID)' disabled>Отправить</button>
 			</div>
-		</div>
 		<% include footer %>
 </body>
 
