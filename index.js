@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var con = mysql.createConnection({
-  host: "127.0.0.1",
+  host: "localhost",
   user: "stduser",
   password: "p55-cd53"
 });
@@ -32,8 +32,8 @@ con.connect(function(errc) {
 				req = { "body": JSON.stringify({ 'name': 'Григорий Зотенко', 'password': 'zxcvb' })}
 				login.regnew(req, null);
 			}
-		});
-	});
+		});		
+	}); 	
 	sql = "CREATE TABLE IF NOT EXISTS comments (id INT AUTO_INCREMENT PRIMARY KEY, " +
 		"titleID INT, userID INT, commTimeMs DOUBLE, commText TEXT) " +
 		"CHARACTER SET utf8 COLLATE utf8_unicode_ci";
@@ -42,8 +42,8 @@ con.connect(function(errc) {
 		console.log("Table comments linked");
 	});
 	sql = "CREATE TABLE IF NOT EXISTS news (id INT AUTO_INCREMENT PRIMARY KEY, " +
-		"authorID INT, title VARCHAR(90), shortDesc VARCHAR(120), fullDesc VARCHAR(30), " +
-		"thumbImage VARCHAR(45), createdTime DATETIME DEFAULT CURRENT_TIMESTAMP) " +
+		"authorID INT, title VARCHAR(90), shortDesc VARCHAR(120), fullDesc VARCHAR(30), " + 
+		"thumbImage VARCHAR(45), createdTime DATETIME DEFAULT CURRENT_TIMESTAMP) " + 
 		"CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 	con.query(sql, function (err, result) {
 		if (err) throw err;
@@ -82,6 +82,12 @@ con.connect(function(errc) {
 			}
 		});
 	});
+	sql = "CREATE TABLE IF NOT EXISTS subscribers (id INT AUTO_INCREMENT PRIMARY KEY, " +
+		"email VARCHAR(90)) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
+	con.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log("Table subscribers linked");
+	});	
 });
 
 var express = require('express');
@@ -92,6 +98,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var pool = require('./scripts/dbpool');
+var smtp = require('./scripts/smtp');
 var textParser = bodyParser.text();
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use('/style', express.static(__dirname + '/style'));
@@ -111,14 +118,20 @@ app.get('/',function(req,res) {
     res.render('Main');
 });
 app.get('/titles/:tID', function(req, res) {
-	var sql = "SELECT fullDesc FROM news WHERE id=?";
+	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name FROM news "
+		+ "RIGHT JOIN users ON news.authorID=users.userID WHERE news.id=?";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
 			con.release();
 			if (err)
 				console.log(err);
-			res.render('News', { title: "news/" + result[0].fullDesc, tID: req.params.tID },
-			function(errs, thtml) {
+			res.render('News', { 
+				title: "news/" + result[0].fullDesc, 
+				tID: req.params.tID,
+				nImage: '/images/' + result[0].thumbImage,
+				nTitle: result[0].title,
+				nAuthor: result[0].name
+				}, function(errs, thtml) {
 				if (errs)
 					console.log(errs);
 				else
@@ -146,7 +159,7 @@ app.get('/profile', function(req, res) {
 app.post('/show/:tID', function(req, res) {
 	var sql = "SELECT users.name, users.userPic, comments.commTimeMs, comments.commText "
 		+ "FROM comments LEFT JOIN users ON users.userID=comments.userID "
-		+ "WHERE comments.titleID=?";
+		+ "WHERE comments.titleID=? ORDER BY comments.commTimeMs DESC";
 	var textRet = "";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
@@ -164,10 +177,10 @@ app.post('/post/:tID', textParser, function(req, res) {
 		res.sendStatus(401);
 		return;
 	}
-	var d = new Date();
+	var d = new Date();	
 	var comm = [req.params.tID, req.session.uID, d.getTime(), req.body];
 	var sql = "INSERT INTO comments (titleID, userID, commTimeMs, commText) VALUES (?)";
-	pool.getConnection(function(error, con) {
+	pool.getConnection(function(error, con) {	
 		con.query(sql, [comm], function (err, result) {
 			con.release();
 			if (err)
@@ -188,19 +201,19 @@ app.post('/load/:cnt', textParser, function(req, res) {
 				sql2 = "SELECT id, title, shortDesc, thumbImage FROM news " +
 					"WHERE id=" + result[0].titleID;
 			} else {
-				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage " +
-					"FROM news LEFT JOIN users ON users.userID=news.authorID WHERE news.id<>" +
+				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage " + 
+					"FROM news LEFT JOIN users ON users.userID=news.authorID WHERE news.id<>" + 
 					result[0].titleID + " ORDER BY news.id DESC LIMIT " + req.params.cnt;
 			}
 			con.query(sql2, function(err2, result2) {
 				con.release();
 				if (err2)
-					console.log(err2);
+					console.log(err2);	
 				res.type('text/plain');
-				res.send(JSON.stringify(result2));
+				res.send(JSON.stringify(result2));				
 			});
 		});
-	});
+	});	
 });
 // Uploading section
 app.post('/uploadPic', function(req, res) {
@@ -227,7 +240,10 @@ app.post('/uploadPic', function(req, res) {
 						res.redirect('/Profile?result=false');
 					}
 					else
+					{
 						res.redirect('/Profile?result=true');
+						//smtp.notify('Test', 10);
+					}
 				});
 			});
 		});
@@ -257,7 +273,7 @@ app.post('/uploadNews', function(req, res) {
 				}
 				var sql = "INSERT INTO news (authorID, title, shortDesc, fullDesc, thumbImage) " +
 					"VALUES (?)";
-				var value = [req.session.uID, fields.ntitle, fields.ndescr,
+				var value = [req.session.uID, fields.ntitle, fields.ndescr, 
 					files.ejsUp.name, files.imageUp.name];
 				pool.getConnection(function(err3, con) {
 					con.query(sql, [value], function(errs, result) {
@@ -267,7 +283,10 @@ app.post('/uploadNews', function(req, res) {
 							res.redirect('/Profile?result=false');
 						}
 						else
+						{
 							res.redirect('/Profile?result=true');
+							smtp.notify(fields.ntitle, result.insertId);
+						}
 					});
 				});
 			});
@@ -291,7 +310,7 @@ app.post('/api/params', login.auth, textParser, function(req, res) {
 		pool.getConnection(function(error, con) {
 			con.query(sql, [uparams.tID], function(err, result) {
 				if (err)
-					console.log(err);
+					console.log(err);				
 				if (result.length > 0)
 				{
 					var sql2 = "UPDATE extraId SET titleID=? WHERE type='Main title'";
@@ -300,7 +319,7 @@ app.post('/api/params', login.auth, textParser, function(req, res) {
 						if (error2)
 							console.log(error2);
 						res.type('text/plain');
-						res.send(JSON.stringify({ "tID": uparams.tID }));
+						res.send(JSON.stringify({ "tID": uparams.tID }));						
 					});
 				} else {
 					con.release();
@@ -308,10 +327,10 @@ app.post('/api/params', login.auth, textParser, function(req, res) {
 					res.send(JSON.stringify({ "tID": -1 }));
 				}
 			});
-		});
+		});			
 	} else {
 		res.type('text/plain');
-		res.send(JSON.stringify({ "tID": -1 }));
+		res.send(JSON.stringify({ "tID": -1 }));		
 	}
 });
 app.post('/api/profile', login.auth, function(req, res) {
@@ -321,16 +340,19 @@ app.post('/api/profile', login.auth, function(req, res) {
 			con.release();
 			if (err)
 				console.log(err);
-			textRet = JSON.stringify({
-				"uID": req.session.uID,
+			textRet = JSON.stringify({ 
+				"uID": req.session.uID, 
 				"name": req.session.name,
 				"accLevel": result[0].accLevel });
 			res.type('text/plain');
 			res.send(textRet);
 		});
-	});
+	});	
 });
+//Mailing
+app.post('/api/feedback', textParser, smtp.feedback);
+app.post('/api/subscribe', textParser, smtp.subscribe);
 
-app.listen(80, function(){
-    console.log('Node server running @ http://localhost')
+app.listen(1666, function(){
+    console.log('Node server running @ http://localhost:1666')
 });
