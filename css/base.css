@@ -18,10 +18,14 @@ body {
 	margin:0 auto;
 	/* width:800px; */
 	border-top:1px solid rgba(60,60,60,0.55);
-	padding-bottom:5px;
+    padding-bottom:5px;
+    padding-top: 30px;
+    margin-top: 30px;
 }
 .menu ul {
-	margin-left:60px;
+    width: 700px;
+    margin-right: auto;
+	margin-left: auto;
 	padding:0 0 18px 0;
 }
 .menu a {
@@ -97,7 +101,8 @@ input[type="submit"] {
 	margin:0 auto;
 	font:normal normal 14px HelveticaLight;
 	color: silver;
-	padding-top:50px;
+    padding-top:50px;
+    text-align: center;
 }
 .footer {
 	height:240px;
@@ -186,4 +191,28 @@ input[type="submit"] {
    -webkit-animation-fill-mode: both;
    animation-fill-mode: both;
    display: inline-block;
+}
+
+#mc-form input[type=submit] {
+    position: relative;
+}
+
+/* HEADER */
+.menu-items {
+    text-align: center;
+}
+
+#collbut {
+    background: transparent;
+    font-size: 25px;
+    border: none;
+    color: slategray;
+    cursor: pointer;
+}
+#collbut.hover {
+    color: #E1EAEB;
+}
+
+.container-fluid {
+    padding: 0 !important;
 }

@@ -1,6 +1,31 @@
 @media screen and (min-width : 700px) {
-
+    #collbut {
+        display: none!important;
+    }
+    .menu {
+        display: inline-block !important;
+    }
 }
 @media screen and (max-width : 700px) {
+    .menu {
+        display: none !important;
+        /* display: block !important; */
+    }
+    .menu ul{
+        width: 300px !important;
+        /* display: none !important; */
+        display: block !important;
+        text-align: center !important@;
+        width: 100px !important@;
+    }
+    .menu li {
+        float: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        margin-top: 15px  !important;
+    }
+    .show {
+        display: block !important;
+    }
 
 }
