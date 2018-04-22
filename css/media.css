@@ -11,12 +11,12 @@
         display: none !important;
         /* display: block !important; */
     }
-    .menu ul{
+    .menu ul {
         width: 300px !important;
         /* display: none !important; */
         display: block !important;
-        text-align: center !important@;
-        width: 100px !important@;
+        text-align: center !important;
+        width: 100px !important;
     }
     .menu li {
         float: none !important;
@@ -27,5 +27,15 @@
     .show {
         display: block !important;
     }
-
+}
+@media screen and (max-width : 1720px) {
+    .popular {
+        position: relative !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+        margin-top: 50px !important;
+        top: 0;
+        right: 0;
+        width: 300px;
+    }
 }
