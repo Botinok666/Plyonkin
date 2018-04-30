@@ -16,7 +16,7 @@
         /* display: none !important; */
         display: block !important;
         text-align: center !important;
-        width: 100px !important;
+        /* width: 100px !important; */
     }
     .menu li {
         float: none !important;
