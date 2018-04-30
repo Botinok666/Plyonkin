@@ -39,3 +39,12 @@
         width: 300px;
     }
 }
+
+@media screen and (max-width : 459px) {
+    #cForm {
+        width: 300px !important;
+    }
+    #cForm button {
+        width: 300px !important;
+    }
+}
