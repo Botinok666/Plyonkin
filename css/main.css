@@ -35,7 +35,7 @@ body {
 	padding: 0 5%;
 	margin-top: 5%;
 	text-transform:uppercase;
-	width:470px;
+	/* width:470px; */
 }
 .main_news p {
 	font:normal normal 14px Verdana;

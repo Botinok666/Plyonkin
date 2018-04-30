@@ -20,7 +20,7 @@
 	height:100%;
 }
 .comments h4 {
-	width:82%;
+	/* width:82%; */
 	color: rgb(80,120,255);
 		display: inline-block;
 	font:normal bold 14px IstokWeb;
