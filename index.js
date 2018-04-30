@@ -2,94 +2,10 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
   host: "localhost",
   user: "stduser",
-  password: "p55-cd53"
+  password: "p55-cd53",
+  database: "mydb"
 });
 var login = require('./scripts/login');
-con.connect(function(errc) {
-	if (errc) throw errc;
-	var sql = "CREATE DATABASE IF NOT EXISTS mydb CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-	});
-	con.changeUser({database : 'mydb'}, function(err) {
-		if (err) throw err;
-		console.log("Database connected");
-	});
-	sql = "CREATE TABLE IF NOT EXISTS users (userID INT AUTO_INCREMENT PRIMARY KEY, " +
-		"name VARCHAR(30), password CHAR(60) CHARACTER SET ascii COLLATE ascii_bin, " +
-		"created DOUBLE, loggedIn DOUBLE, userPic VARCHAR(30) DEFAULT NULL, " +
-		"accLevel TINYINT DEFAULT 0) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Table users linked");
-		con.query("SELECT userID FROM users LIMIT 3", function (erro, res) {
-			if (erro) throw erro;
-			if (res.length < 2) {
-				var req = { "body": JSON.stringify({ 'name': 'Anton Drugalev', 'password': '12345' })}
-				login.regnew(req, null);
-				req = { "body": JSON.stringify({ 'name': 'Николай Закоморный', 'password': '67890' })}
-				login.regnew(req, null);
-				req = { "body": JSON.stringify({ 'name': 'Григорий Зотенко', 'password': 'zxcvb' })}
-				login.regnew(req, null);
-			}
-		});		
-	}); 	
-	sql = "CREATE TABLE IF NOT EXISTS comments (id INT AUTO_INCREMENT PRIMARY KEY, " +
-		"titleID INT, userID INT, commTimeMs DOUBLE, commText TEXT) " +
-		"CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Table comments linked");
-	});
-	sql = "CREATE TABLE IF NOT EXISTS news (id INT AUTO_INCREMENT PRIMARY KEY, " +
-		"authorID INT, title VARCHAR(90), shortDesc VARCHAR(120), fullDesc VARCHAR(30), " + 
-		"thumbImage VARCHAR(45), createdTime DATETIME DEFAULT CURRENT_TIMESTAMP) " + 
-		"CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Table news linked");
-		con.query("SELECT id FROM news LIMIT 5", function (erro, res) {
-			if (erro) throw erro;
-			if (res.length < 4) {
-				var isql = "INSERT INTO news (authorID, title, shortDesc, fullDesc, thumbImage) " +
-					"VALUES ?";
-				var values = [
-				[1, 'Ошибка в MACOS, IOS и WATCHOS позволяет рушить…', 'Краткое описание 1', 'macos.ejs', '2.jpg'],
-				[1, 'Смартфон XIAOMI MI MIX 2S засветился в первом видео', 'Краткое описание 2', 'xiaomi1.ejs', '1.jpg'],
-				[2, 'IOS 11.3: Была выпущена бета-версия для разработчиков', 'Краткое описание 3', 'ios113.ejs', 'ios-logo-icon-100733550.jpg'],
-				[1, 'Зачем тебе уши, если ты не слушаешь Антона Другалева?', 'Краткое описание 4', 'master.ejs', 'V-sIxy4oW4g.jpg']
-				];
-				con.query(isql, [values], function(errq, resq) {
-					if (errq) throw errq;
-					console.log("Добавлено новостей: " + resq.affectedRows);
-				});
-			}
-		});
-	});
-	sql = "CREATE TABLE IF NOT EXISTS extraId (id INT AUTO_INCREMENT PRIMARY KEY, " +
-		"type VARCHAR(45), titleID INT DEFAULT 1) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Table extraId linked");
-		con.query("SELECT id FROM extraId LIMIT 5", function (erro, res) {
-			if (erro) throw erro;
-			if (res.length < 1) {
-				var isql = "INSERT INTO extraId (type, titleID) VALUES (?)";
-				con.query(isql, [['Main title', 1]], function(errq, resq) {
-					if (errq) throw errq;
-					console.log("Добавлено extraId: " + resq.affectedRows);
-				});
-			}
-		});
-	});
-	sql = "CREATE TABLE IF NOT EXISTS subscribers (id INT AUTO_INCREMENT PRIMARY KEY, " +
-		"email VARCHAR(90)) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Table subscribers linked");
-	});	
-});
-
 var express = require('express');
 var app = express();
 var session = require('express-session');
