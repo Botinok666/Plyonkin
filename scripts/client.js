@@ -66,7 +66,7 @@ function loadMainPageTitles() {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
-			if (obj.length == newsCnt) {
+			if (obj.length > 0) {
 				putPreviewTitle(obj[0], $("#leftCol"));
 				putPreviewTitle(obj[1], $("#leftCol"));
 				putPreviewTitle(obj[2], $("#rightCol"));
