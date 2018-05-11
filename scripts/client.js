@@ -1,18 +1,12 @@
 function showLogIn(elem) {
 	$(elem).empty();
-	var form0 = $('<form/>').html('Логин: ').appendTo(elem);
-	var input0 = $('<input/>', { 'id': 'uname', 'type': 'text' }).appendTo(form0);
-	$(form0).append('Пароль: ');
-	var input1 = $('<input/>', { 'id': 'psw', 'type': 'password' }).appendTo(form0);
-	var input2 = $('<input/>', { 'id': 'Login', 'type': 'button',
-		'onclick': 'logIn()', 'value': 'Войти' }).appendTo(form0);
-	var input3 = $('<input/>', { 'id': 'Register', 'type': 'button',
-		'onclick': 'regNew()', 'value': 'Новый пользователь' }).appendTo(form0);
-	var p0 = $('<p/>', { 'id': 'logInfo' }).html('Войдите, чтобы оставить комментарий').appendTo(elem);
+	$('#textfield').hide();
+	$('#sendBtn').hide();
 }
 
 function showLogOut(uname, elem) {
 	$(elem).empty();
+	$('#modal').hide();
 	var form0 = $('<form/>').html('Вы вошли как ').appendTo(elem);
 	var a0 = $('<a/>', { 'href': '/profile' }).html(uname).appendTo(form0);
 	var input0 = $('<input/>', { 'type': 'button', 'onclick': 'logOut()', 'value': 'Выйти' }).appendTo(form0);
@@ -31,6 +25,8 @@ function putPreviewTitle(obj, elem) {
 
 function putComment(obj, elem) {
 	var d = new Date(obj.commTimeMs);
+	$('<p/>', { 'id': 'nocommentstext' }).appendTo(elem);
+
 	var divc = $('<div/>', { 'class': 'comments' }).appendTo(elem);
 	if (obj.userPic == null)
 		obj.userPic = 'null.jpg';
@@ -48,7 +44,7 @@ function loadHeadTitle() {
 			var obj = JSON.parse(this.responseText);
 			if (obj.length > 0) {
 				var a0 = $('<a/>', { 'href': '/titles/' + obj[0].id }).appendTo($('.main_news'));
-				var img0 = $('<img/>', { 'class': 'gek',
+				var img0 = $('<img/>', { 'class': 'newsPicture',
 					'src': '/images/' + obj[0].thumbImage }).appendTo(a0);
 				var h3c = $('<h3/>').appendTo($('.main_news'));
 				var a1 = $('<a/>', { 'href': '/titles/' + obj[0].id }).html(obj[0].title).appendTo(h3c);
@@ -73,10 +69,10 @@ function loadMainPageTitles() {
 				putPreviewTitle(obj[3], $("#rightCol"));
 				$(document).ready(function(){
 					$('.main_news').mouseout(function(){
-						$('.gek').stop().animate({opacity:'0.35'},600);
+						$('.newsPicture').stop().animate({opacity:'0.35'},600);
 					});
 					$('.main_news').mouseover(function(){
-						$('.gek').stop().animate({opacity:'0.7'},300);
+						$('.newsPicture').stop().animate({opacity:'0.7'},300);
 					});
 					$('.imgcol').mouseout(function(){
 						$(this).stop().animate({opacity:'1'},600);
@@ -99,7 +95,7 @@ function getComm(tID)	{
 			var obj = JSON.parse(this.responseText);
 			$("#comments").empty();
 			if (obj.length == 0) {
-				$("#comments").html("Комментариев пока нет, будьте первыми");
+				$("#nocommentstext").html("Комментариев пока нет, будьте первыми");
 			}
 			else for (x in obj) {
 				putComment(obj[x], $("#comments"));
@@ -140,6 +136,10 @@ function logIn() {
 			if (obj.uID > -1) {
 				showLogOut(uData.name, $("#loginarea"));
 				$("#sendBtn").attr("disabled", false);
+				$('#textfield').show();
+				$('#sendBtn').show();
+				$('.window').hide();
+				$('#mask, .window').hide();
 			}
 			else
 				$("#logInfo").html(obj.text);
@@ -193,6 +193,7 @@ function logOut() {
 		if (this.readyState == 4 && this.status == 200) {
 			showLogIn($('#loginarea'));
 			$("#sendBtn").attr("disabled", true);
+			$('#modal').show();
 		}
 	};
 	xhttp.open("POST", "/api/logout", true);

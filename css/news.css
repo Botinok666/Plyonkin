@@ -1,8 +1,83 @@
+.link {font-size: 16; color:#ffffff; text-decoration:none }
+.link:hover {color:#CCC; text-decoration:none}  
+#mask {
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:9000;
+    background-color:#000;
+    display:none;
+    }
+#boxes .window {
+    position:absolute;
+    left:0;
+    top:0px;
+    -top: 40px;
+    width:440px;
+    display:none;
+    z-index:9999;
+    padding: 20px;
+    overflow: hidden;
+    }  
+#boxes #dialog {
+    width:375px; 
+    padding:10px;
+    background-color:#ffffff;
+    }  
+.top {
+    position:absolute;
+    left:0;
+    top:0;
+    width:370px;
+    height:30px;
+    background: #0085cc;
+    padding: 8px 20px 6px 10px;
+    }
+	
+.close1 {
+	margin-top:-7px;
+
+    float:right;
+    }
+.content2 {
+    padding-top: 10px;
+}
+.content2 p {
+	text-align: center;
+		margin:0;
+}
+.content2 input[type=text] {
+    margin-bottom: 10px;
+
+	width: 100%;
+}
+.content2 input[type=password] {
+	width: 100%;
+}
+
+.content2 input[type=button] {
+	border:0;
+	height:32px;
+	width: 173px;
+	margin-top:30px;
+	background: #0054a5;
+	color:#eee;
+	display: inline-block;
+}
+.content2 input[type=button]:hover {
+   background: silver;
+}
 .column {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	float:left;
+}
+#nocommentstext {
+	text-align: center;
+}
+#modal {
+	text-align:center;
 }
 .comments {
 	width:97.2%;
@@ -39,6 +114,29 @@
 	position:absolute;
 	font:normal normal 13px IstokWeb;
 	color:rgb(50,50,50);
+}
+#sendBtn {
+background-color:#0177D9;
+	width:99.4%;
+	color: white;
+	border:0px;
+	height: 30px;
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
+
+}
+#sendBtn:hover {
+   background: silver;
+}
+
+#textfield {
+	margin-top: 12px;
+	width:99.4%;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
+	padding-top: 5px;
+	padding-left: 15px;
+	border:0px;
+	height: 100px;
+	background-color: white;
 }
 .content {
 		text-align: left;
