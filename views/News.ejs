@@ -10,7 +10,6 @@
 		================================================== -->
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
-		<link href="/css/main.css" rel="stylesheet" type="text/css">
 		<link href="/css/media.css" rel="stylesheet" type="text/css">
 		<link href="/css/news.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"> 
@@ -76,23 +75,21 @@
 		</div>
 
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-3 col-md-1"></div>
-					<div class="col-lg-6 col-md-10 col-sm-12">
+				<div class="rowNews">
 						<div class="column">
 							<div id='tContent' class="content">
-							<%- include(title) %>
+								<img class='imgcol' src='<%= nImage %>'/>
+								<h4><%= nTitle %></h4>
+								<h3><%= nAuthor %></h3>						
+								<%- include(title) %>
 							</div>
 							<a href="#dialog" id="modal">Войти</a>
 							<p id='loginarea'>Jackety-jack</p>
 							<p id='comments'></p>
 							<p id='nocommentstext'></p>
-							<textarea id="textfield" name="textfield" type="text" rows="8" columns="32" placeholder="Напечатайте свой комментарий здесь..."></textarea>
-							<br>
+							<textarea id="textfield" name="textfield" type="text"  placeholder="Напечатайте свой комментарий здесь..."></textarea>
 							<button id="sendBtn" onclick='postComm(tID)' disabled>Отправить</button>
 						</div>
-					</div>
-					<div class="col-lg-3 col-md-1"></div>
 				</div>
 			</div>
 		<% include footer %>

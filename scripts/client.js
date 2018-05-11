@@ -25,8 +25,6 @@ function putPreviewTitle(obj, elem) {
 
 function putComment(obj, elem) {
 	var d = new Date(obj.commTimeMs);
-	$('<p/>', { 'id': 'nocommentstext' }).appendTo(elem);
-
 	var divc = $('<div/>', { 'class': 'comments' }).appendTo(elem);
 	if (obj.userPic == null)
 		obj.userPic = 'null.jpg';
