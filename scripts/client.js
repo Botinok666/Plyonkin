@@ -26,7 +26,7 @@ function putPreviewTitle(obj, elem) {
 	var h3c = $('<h3/>').html(obj.name).appendTo(divc);
 	var h2c = $('<h2/>').html(obj.shortDesc).appendTo(divc);
 	var ac2 = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc);
-	var pc = $('<p/>').html('Читать далее…').appendTo(ac2);
+	var pc = $('<p/>').html('Читать далее').appendTo(ac2);
 }
 
 function putComment(obj, elem) {

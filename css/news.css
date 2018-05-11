@@ -41,6 +41,9 @@
 	color:rgb(50,50,50);
 }
 .content {
+		text-align: left;
+
+	width:100%;
 	background-color:white;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
 	position:relative;
@@ -58,7 +61,7 @@
 	top:14px;
 	padding-top:10px;
 	background:#4C94FF;
-	text-align: center;
+	/*text-align: center;*/
 	text-transform:uppercase;
 	height:35px;
 	font:normal bold 14px DidactGothic;
@@ -70,8 +73,9 @@
 	padding:4px 4px 4px 4px;
 	font:normal normal 14px HelveticaLight;
 	/*		height: 72px;
-	*/
+	
 text-justify: auto;
+*/
 	position:relative;
 
 		margin-left:7px;
@@ -79,8 +83,8 @@ text-justify: auto;
 }
 .content h3 {
 		border-bottom:1px solid silver;
-		text-transform:uppercase;
-
+/*		text-transform:uppercase;
+*/
 	padding:18px 4px 4px 4px;
 	font:normal normal 10px OpenSans;
 
@@ -92,9 +96,9 @@ text-justify: auto;
 .content h4 {
 	/*
 	height: 70px;
-	*/
+	
 	text-transform:uppercase;
-
+	*/
   overflow: hidden;
 	padding:18px 4px 4px 4px;
 	font:normal bold 17px IstokWeb;

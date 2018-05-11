@@ -5,8 +5,13 @@
     .menu {
         display: inline-block !important;
     }
+
 }
 @media screen and (max-width : 700px) {
+
+		.footer {
+			height: calc(30vh + 90px);
+		}
     .menu {
         display: none !important;
         /* display: block !important; */
