@@ -121,7 +121,7 @@ function postComm(tID)	{
 	$("#textfield").val("");
 }
 
-function logIn() {
+function logIn(tID) {
 	var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
 	if ((uData.name.length < 3) || (uData.password.length < 3)) {
 		$("#logInfo").html("Имя и пароль должны состоять хотя бы из 3 символов!");
@@ -138,6 +138,7 @@ function logIn() {
 				$('#sendBtn').show();
 				$('.window').hide();
 				$('#mask, .window').hide();
+				getLoyce(tID);
 			}
 			else
 				$("#logInfo").html(obj.text);
@@ -214,4 +215,35 @@ function myLoad(tID) {
 	xhttp.open("POST", "/api/auth", true);
 	xhttp.send(null);
 	getComm(tID);
+	getLoyce(tID);
+}
+
+function getLoyce(tID) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			if (obj.loyce == 1)
+				$("#loyceBtn").attr("style", "color:red");
+			else
+				$("#loyceBtn").attr("style", "color:gray");
+		}
+	};
+	xhttp.open("POST", "/loyce/get-" + tID, true);
+	xhttp.send(null);
+}
+
+function setLoyce(tID) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			if (obj.loyce == 1)
+				$("#loyceBtn").attr("style", "color:red");
+			else
+				$("#loyceBtn").attr("style", "color:gray");
+		}
+	};
+	xhttp.open("POST", "/loyce/set-" + tID, true);
+	xhttp.send(null);	
 }

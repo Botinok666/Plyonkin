@@ -158,7 +158,6 @@ app.post('/uploadPic', function(req, res) {
 					else
 					{
 						res.redirect('/Profile?result=true');
-						//smtp.notify('Test', 10);
 					}
 				});
 			});
@@ -268,6 +267,56 @@ app.post('/api/profile', login.auth, function(req, res) {
 //Mailing
 app.post('/api/feedback', textParser, smtp.feedback);
 app.post('/api/subscribe', textParser, smtp.subscribe);
+//Loyce section
+app.post('/loyce/:mode-:tID', login.auth, function(req, res) {
+	pool.getConnection(function(error, con) {
+		var sql = 'SELECT loyce FROM loyces WHERE userID=? AND titleID=?';		
+		con.query(sql, [req.session.uID, req.params.tID], function(err, result) {
+			if (err)
+				console.log(err);
+			var ret;
+			if (result.length > 0) {
+				ret = result[0].loyce;
+				if (req.params.mode == 'set') {
+					ret ^= 1;
+					sql = 'UPDATE loyces SET loyce=? WHERE userID=? AND titleID=?';
+					con.query(sql, [ret, req.session.uID, req.params.tID], 
+						function(err2, result2) {
+						con.release();
+						if (err2)
+							console.log(err2);
+						textRet = JSON.stringify({ "loyce": ret });
+						res.type('text/plain');
+						res.send(textRet);
+					});
+				} else {
+					con.release();
+					textRet = JSON.stringify({ "loyce": ret });
+					res.type('text/plain');
+					res.send(textRet);
+				}
+			} else {
+				if (req.params.mode == 'set') {
+					sql = 'INSERT INTO loyces(userID, titleID, loyce) VALUES (?,?,1)';
+					con.query(sql, [req.session.uID, req.params.tID],
+						function(err2, result2) {
+						con.release();
+						if (err2)
+							console.log(err2);
+						textRet = JSON.stringify({ "loyce": 1 });
+						res.type('text/plain');
+						res.send(textRet);
+					});
+				} else {
+					con.release();
+					textRet = JSON.stringify({ "loyce": 0 });
+					res.type('text/plain');
+					res.send(textRet);
+				}
+			}
+		});
+	});
+}
 
 app.listen(1666, function(){
     console.log('Node server running @ http://localhost:1666')
