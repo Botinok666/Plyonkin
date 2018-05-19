@@ -68,6 +68,36 @@ INSERT INTO `extraid` VALUES (1,'Main title',9);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `loyces`
+--
+
+DROP TABLE IF EXISTS `loyces`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `loyces` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `loyce` tinyint(2) NOT NULL,
+  `titleID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `titleID_idx` (`titleID`),
+  KEY `userID_idx` (`userID`),
+  CONSTRAINT `titleID` FOREIGN KEY (`titleID`) REFERENCES `news` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `loyces`
+--
+
+LOCK TABLES `loyces` WRITE;
+/*!40000 ALTER TABLE `loyces` DISABLE KEYS */;
+INSERT INTO `loyces` VALUES (1,1,11,5),(2,1,12,5),(3,1,11,4),(4,1,13,4);
+/*!40000 ALTER TABLE `loyces` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `news`
 --
 
@@ -145,9 +175,13 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Anton Drugalev','$2a$09$YNinB4FEwVBAlDmKPlqlfuBsCuspZxXHBYEIq4iGxsua2SncTZlva',1521820411813,1522873114055,NULL,2),(2,'Николай Закоморный','$2a$09$m4IP198rAA1pMlXmxnTLXuJDpfV4aJ8njnmENfcBW1unObdsCpJ1C',1521820411814,1522869173460,'u2.jpg',0),(3,'Great Master','$2a$09$fqcU1qfUdmilYis.0HWlkeBV4H4tmypJaAfq8MR8zEFb53aWUIF1S',1521970860429,1521970860429,NULL,0),(4,'Григорий Зотенко','$2a$09$IbnsI4eTG4NbSc2tNzjMLOGGr6BBrJJfhmJlTtEKCKJnPRBzrw5qu',1523181595846,1523563368602,'u4.jpeg',2),(5,'Andrew Barlit','$2a$09$Dz56rm0yqEszG6T4Q5ggTuOQkBVf4nERAC8WuUnADL64DxbJj6PXW',1523182262408,1523182738463,'u5.jpg',0),(6,'WalterWhite','$2a$09$hRxUpN6C0AtvTWpywvMM4.q2d1iW9LU38m7.d2cfR0ZSLugwMclN2',1523183119212,1523183413677,'u6.jpg',0),(7,'123','$2a$09$0XoKY9GrdwH15KpY.ca6lOSPZoMGyOMKeaw4P17Zh/MlbLvzDp33S',1523183353744,1523183438186,'u7.jpg',0);
+INSERT INTO `users` VALUES (1,'Anton Drugalev','$2a$09$YNinB4FEwVBAlDmKPlqlfuBsCuspZxXHBYEIq4iGxsua2SncTZlva',1521820411813,1525096226834,NULL,2),(2,'Николай Закоморный','$2a$09$m4IP198rAA1pMlXmxnTLXuJDpfV4aJ8njnmENfcBW1unObdsCpJ1C',1521820411814,1522869173460,'u2.jpg',0),(3,'Great Master','$2a$09$fqcU1qfUdmilYis.0HWlkeBV4H4tmypJaAfq8MR8zEFb53aWUIF1S',1521970860429,1521970860429,NULL,0),(4,'Григорий Зотенко','$2a$09$IbnsI4eTG4NbSc2tNzjMLOGGr6BBrJJfhmJlTtEKCKJnPRBzrw5qu',1523181595846,1526740880492,'u4.jpeg',2),(5,'Andrew Barlit','$2a$09$Dz56rm0yqEszG6T4Q5ggTuOQkBVf4nERAC8WuUnADL64DxbJj6PXW',1523182262408,1526740720502,'u5.jpg',0),(6,'WalterWhite','$2a$09$hRxUpN6C0AtvTWpywvMM4.q2d1iW9LU38m7.d2cfR0ZSLugwMclN2',1523183119212,1523183413677,'u6.jpg',0),(7,'123','$2a$09$0XoKY9GrdwH15KpY.ca6lOSPZoMGyOMKeaw4P17Zh/MlbLvzDp33S',1523183353744,1523183438186,'u7.jpg',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'mydb'
+--
 
 --
 -- Dumping routines for database 'mydb'
@@ -162,4 +196,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-20 23:37:03
+-- Dump completed on 2018-05-19 18:33:49
