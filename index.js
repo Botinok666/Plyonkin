@@ -34,8 +34,9 @@ app.get('/',function(req,res) {
     res.render('Main');
 });
 app.get('/titles/:tID', function(req, res) {
-	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name FROM news "
-		+ "RIGHT JOIN users ON news.authorID=users.userID WHERE news.id=?";
+	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name, " 
+		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
+		+ "FROM news RIGHT JOIN users ON news.authorID=users.userID WHERE news.id=?";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
 			con.release();
@@ -46,7 +47,8 @@ app.get('/titles/:tID', function(req, res) {
 				tID: req.params.tID,
 				nImage: '/images/' + result[0].thumbImage,
 				nTitle: result[0].title,
-				nAuthor: result[0].name
+				nAuthor: result[0].name,
+				rate: result[0].loyce == null ? 0 : result[0].loyce
 				}, function(errs, thtml) {
 				if (errs)
 					console.log(errs);
@@ -270,7 +272,7 @@ app.post('/api/subscribe', textParser, smtp.subscribe);
 //Loyce section
 app.post('/loyce/:mode-:tID', login.auth, function(req, res) {
 	pool.getConnection(function(error, con) {
-		var sql = 'SELECT loyce FROM loyces WHERE userID=? AND titleID=?';		
+		var sql = 'SELECT loyce FROM loyces WHERE userID=? AND titleID=?';
 		con.query(sql, [req.session.uID, req.params.tID], function(err, result) {
 			if (err)
 				console.log(err);
@@ -282,41 +284,40 @@ app.post('/loyce/:mode-:tID', login.auth, function(req, res) {
 					sql = 'UPDATE loyces SET loyce=? WHERE userID=? AND titleID=?';
 					con.query(sql, [ret, req.session.uID, req.params.tID], 
 						function(err2, result2) {
-						con.release();
 						if (err2)
 							console.log(err2);
-						textRet = JSON.stringify({ "loyce": ret });
-						res.type('text/plain');
-						res.send(textRet);
+						retLoyces(res, con, req.params.tID, ret);
 					});
 				} else {
-					con.release();
-					textRet = JSON.stringify({ "loyce": ret });
-					res.type('text/plain');
-					res.send(textRet);
+					retLoyces(res, con, req.params.tID, ret);
 				}
 			} else {
 				if (req.params.mode == 'set') {
 					sql = 'INSERT INTO loyces(userID, titleID, loyce) VALUES (?,?,1)';
 					con.query(sql, [req.session.uID, req.params.tID],
 						function(err2, result2) {
-						con.release();
 						if (err2)
 							console.log(err2);
-						textRet = JSON.stringify({ "loyce": 1 });
-						res.type('text/plain');
-						res.send(textRet);
+						retLoyces(res, con, req.params.tID, 1);
 					});
 				} else {
-					con.release();
-					textRet = JSON.stringify({ "loyce": 0 });
-					res.type('text/plain');
-					res.send(textRet);
+					retLoyces(res, con, req.params.tID, 0);
 				}
 			}
 		});
 	});
 });
+function retLoyces(res, con, tID, lval) {
+	var sql = "SELECT SUM(loyce) AS loyce FROM loyces WHERE titleID=?";
+	con.query(sql, [tID], function(err3, result3) {
+		con.release();
+		if (err3)
+			console.log(err3);
+		textRet = JSON.stringify({ "loyce": lval, "sum": result3[0].loyce });
+		res.type('text/plain');
+		res.send(textRet);
+	});
+}
 app.post('/getPopular', textParser, function(req, res) {
 	var sql = "SELECT id, title, " 
 		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
@@ -333,6 +334,6 @@ app.post('/getPopular', textParser, function(req, res) {
 	});
 });
 
-app.listen(1666, function(){
-    console.log('Node server running @ http://localhost:1666')
+app.listen(80, function(){
+    console.log('Node server running @ http://localhost')
 });

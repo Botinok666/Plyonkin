@@ -54,6 +54,24 @@ function loadHeadTitle() {
 	xhttp.send(null);
 }
 
+function loadPopular() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			$('.popular').empty();
+			$('<h3/>').html('ПОПУЛЯРНОЕ').appendTo($('.popular'));
+			for (x in obj) {
+				var pp = $('<p/>').appendTo($('.popular'));
+				var ap = $('<a/>', { 'href': '/titles/' + obj[x].id }).html(obj[x].title).appendTo(pp);
+				var bp = $('<b/>').html(' (' + (obj[x].loyce == null ? 0 : obj[x].loyce) + ')').appendTo(pp);
+			}
+		}
+	};
+	xhttp.open("POST", '/getPopular', true);
+	xhttp.send(null);
+}
+
 function loadMainPageTitles() {
 	var xhttp = new XMLHttpRequest();
 	var newsCnt = 4;
@@ -242,6 +260,7 @@ function setLoyce(tID) {
 				$("#loyceBtn").attr("style", "color:red");
 			else
 				$("#loyceBtn").attr("style", "color:gray");
+			$('#loyceCnt').html('Рейтинг: ' + (obj.sum == null ? 0 : obj.sum));
 		}
 	};
 	xhttp.open("POST", "/loyce/set-" + tID, true);
