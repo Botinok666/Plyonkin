@@ -316,7 +316,22 @@ app.post('/loyce/:mode-:tID', login.auth, function(req, res) {
 			}
 		});
 	});
-}
+});
+app.post('/getPopular', textParser, function(req, res) {
+	var sql = "SELECT id, title, " 
+		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
+		+ "FROM news ORDER BY loyce DESC LIMIT 4";
+	pool.getConnection(function(error, con) {
+		con.query(sql, function(err, result) {
+			con.release();
+			if (err)
+				console.log(err);
+			var textRet = JSON.stringify(result);
+			res.type('text/plain');
+			res.send(textRet);
+		});
+	});
+});
 
 app.listen(1666, function(){
     console.log('Node server running @ http://localhost:1666')
