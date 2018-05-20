@@ -77,17 +77,19 @@
 			<div class="container-fluid">
 				<div class="rowNews">
 						<div class="column">
+							<a href="#dialog" id="modal">Авторизация на сайте</a>
+							<p id='loginarea'>Jackety-</p>
 							<div id='tContent' class="content">
+							
 								<img class='imgcol' src='<%= nImage %>'/>
 								<h4><%= nTitle %></h4>
 								<h3><%= nAuthor %></h3>						
 								<%- include(title) %>
 								<h5><font size="4" id='loyceCnt'>Рейтинг: <%= rate %> </font>
-									<b id='loyceBtn'style='color:gray' onclick='setLoyce(tID)'>&#x2764;</b>
+									<a id='loyceBtn' onclick='setLoyce(tID)'>&#x2764;</a>
 								</h5>
 							</div>
-							<a href="#dialog" id="modal">Войти</a>
-							<p id='loginarea'>Jackety-jack</p>
+
 							<p id='comments'></p>
 							<p id='nocommentstext'></p>
 							<textarea id="textfield" name="textfield" type="text"  placeholder="Напечатайте свой комментарий здесь..."></textarea>

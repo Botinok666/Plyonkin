@@ -117,23 +117,30 @@ body {overflow-x: hidden;}
 	height:210px;
 }
 .popular {
-	float: left;
-	margin-top: 28px;
-	margin-left: 30px;
-	background-color: white;
-	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
-	width: 280px;
-	padding-bottom: 10px;
+float: left;
+margin-top: 28px;
+margin-left: 30px;
+background-color: white;
+box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
+width: 280px;
+padding-bottom: 10px;
+}
+.popular b {
+font-weight: normal;
+font: normal normal 14px HelveticaLight;
+color: rgb(10,10,10);
+
 }
 .popular p {
-	font:normal normal 16px HelveticaLight;
-	color:rgb(10,10,10);
-	margin-top:-5px;
-	margin-left:10%;
-	width:74%;
-	padding-bottom:2%;
-	border-bottom:1px solid;
-	border-color:#dadada;
+font: normal normal 14px HelveticaLight;
+color: rgb(10,10,10);
+margin-top: -5px;
+margin-left: 9%;
+width: 81%;
+padding-bottom: 2%;
+border-bottom: 1px solid;
+    border-bottom-color: currentcolor;
+border-color: #dadada;
 }
 .popular h3 {font:normal bold 18px Arial;
 	background:#0980E0;
