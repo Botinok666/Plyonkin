@@ -177,7 +177,6 @@
 	font:normal normal 10px OpenSans;
 	position:relative;
 	margin-top:95px;
-	margin-left:7px;
 	color:rgb(30,30,30);
 }
 .content h4 {
@@ -190,6 +189,17 @@
 	margin-top:95px;
 	margin-left:7px;
 	color:rgb(30,30,30);
+}
+.content h5 {
+	margin-bottom:.5rem;
+	font-family:HelveticaLight;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-weight:500;
+	line-height:1.2;
+	color:inherit;
+	border-top:1px solid silver;
+	text-align:center;
 }
 .content img {object-fit: cover;
 	position:absolute;

@@ -35,13 +35,13 @@
 }
 @media screen and (max-width : 1720px) {
     .popular {
-        position: relative !important;
-        margin-right: auto !important;
-        margin-left: auto !important;
-        margin-top: 50px !important;
-        top: 0;
-        right: 0;
-        width: 300px;
+        /*! position: relative !important; */
+        /*! margin-right: auto !important; */
+        /*! margin-left: auto !important; */
+        /*! margin-top: 50px !important; */
+        /*! top: 0; */
+        /*! right: 0; */
+        /*width: 300px; */
     }
 }
 

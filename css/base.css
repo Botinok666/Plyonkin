@@ -28,6 +28,7 @@ body {
     padding-bottom:5px;
     padding-top: 30px;
     margin-top: 30px;
+	
 }
 .menu ul {
     width: 700px;
@@ -44,7 +45,7 @@ body {
 	font:normal normal 16px Trebuchet MS;
 	list-style:none;
 	float:left;
- 	margin:0 0 0 70px;
+ 	margin:0 0 0 120px;
 }
 .menu ul li:not(.active):hover {
 	transition-property:all;

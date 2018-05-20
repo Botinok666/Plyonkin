@@ -242,7 +242,7 @@ function getLoyce(tID) {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			if (obj.loyce == 1)
-				$("#loyceBtn").attr("style", "color:red");
+				$("#loyceBtn").attr("style", "color:#0177D9");
 			else
 				$("#loyceBtn").attr("style", "color:gray");
 		}
@@ -257,7 +257,7 @@ function setLoyce(tID) {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			if (obj.loyce == 1)
-				$("#loyceBtn").attr("style", "color:red");
+				$("#loyceBtn").attr("style", "color:#0177D9");
 			else
 				$("#loyceBtn").attr("style", "color:gray");
 			$('#loyceCnt').html('Рейтинг: ' + (obj.sum == null ? 0 : obj.sum));
