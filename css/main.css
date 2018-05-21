@@ -79,6 +79,11 @@ body {overflow-x: hidden;}
 	font:normal bold 14px DidactGothic;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
 	position:relative;
+	
+}
+.content p:hover {
+    background-color: #dfdfdf;
+	transition: .5s;
 }
 .content h2 {
 	overflow: hidden;
