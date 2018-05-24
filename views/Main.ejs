@@ -6,13 +6,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>IT-News - Главная страница</title>
 		<!-- CSS
 		================================================== -->
-		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
 		<link href="/css/main.css" rel="stylesheet" type="text/css">
 		<link href="/css/media.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"> 
 		<!-- JS
 		================================================== -->
 		<script src="/scripts/jquery-3.2.1.min.js"></script>
@@ -27,32 +26,23 @@
 				loadPopular();
 			}
 		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	</head>
 	<body onload='pageLoaded()'>
 		<div class="logo">
 			<% include header %>
 			<div class="container-fluid">
-					<div class="col-md-12">
-						<section>
-							<article class="main_news"/>
-						</section>
-					</div>
-				</div>
+				<section>
+					<article class="main_news"/>
+				</section>
+			</div>
 		</div>
 		<div class="container-fluid">
 			<div class="rowMain">
-				
-					<div id="leftCol" class="column"></div>
-					<div id="rightCol" class="column"></div>
-					<div class="popular">
-					</div>
-					
+				<div id="leftCol" class="column"></div>
+				<div id="rightCol" class="column"></div>
+				<div class="popular"></div>
 			</div>
 		</div>
 		<% include footer %>
 	</body>
-<!-- asset bootstrap -->
-<!-- <script src="/assets/js/bootstrap.min.js" type="application/javascript"></script> -->
 </html>
