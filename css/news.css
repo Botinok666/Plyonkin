@@ -238,6 +238,7 @@ background-color:rgba(200,200,200,0.3); text-decoration:none; }
 	color:inherit;
 	border-top:1px solid silver;
 	text-align:center;
+	-webkit-user-select: none;
 }
 .content img {object-fit: cover;
 	position:absolute;
