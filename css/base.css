@@ -96,6 +96,8 @@ body {
 	border: 0;
 }
 #mc-form input[type=submit]:hover {
+		transition: .5s;
+
    background: silver;
    border-color: silver;
 }

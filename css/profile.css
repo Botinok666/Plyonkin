@@ -1,0 +1,25 @@
+.rowProfile{
+	margin:0 auto 0 auto;
+
+
+	padding:20px 0 30px 0;
+	max-width:900px;
+
+}
+.rowProfile:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.column {
+	display: flex;
+	flex-direction: column;
+}
+.content {
+	background-color:white;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
+	position:relative;
+	margin:18px 0 20px 0;
+		min-width:900px;
+
+}

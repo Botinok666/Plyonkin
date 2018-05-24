@@ -1,5 +1,6 @@
 .link {font-size: 16; color:#ffffff; text-decoration:none }
-.link:hover {color:#CCC; text-decoration:none}  
+.link:hover {color:#CCC; text-decoration:none; 	transition: .5s;
+}  
 #mask {
     position:absolute;
     left:0;
@@ -47,11 +48,15 @@
 		margin:0;
 }
 .content2 input[type=text] {
+	border:1px solid silver;
+
     margin-bottom: 10px;
 text-align: center;
 	width: 100%;
 }
 .content2 input[type=password] {
+		border:1px solid silver;
+
 	text-align: center;
 	width: 100%;
 }
@@ -66,6 +71,7 @@ text-align: center;
 	display: inline-block;
 }
 .content2 input[type=button]:hover {
+	transition: .5s;
    background: silver;
 }
 
@@ -87,6 +93,7 @@ display: block;margin: 0 auto;
 }
 
 #loyceBtn {
+
 	color:silver;
 padding-left: 2px;
 padding-right: 2px;
@@ -95,7 +102,9 @@ padding-right: 2px;
 }
 
 #loyceBtn:hover { 	
-background-color:#CCC; text-decoration:none; }  
+	transition: .5s;
+
+background-color:rgba(200,200,200,0.3); text-decoration:none; }  
 
 .comments {
 	margin-top: 15px;
@@ -136,7 +145,7 @@ background-color:#CCC; text-decoration:none; }
 	height: 30px;
 	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
 }
-#sendBtn:hover {background: silver;}
+#sendBtn:hover {background: silver; 	transition: .5s;}
 #textfield {
 	margin-top: 12px;
 	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19);
@@ -172,6 +181,8 @@ background-color:#CCC; text-decoration:none; }
 	color: white;
 }
 .content p:hover {
+		transition: .5s;
+
 	text-decoration:none;
 	background-color:silver;
 }
@@ -198,6 +209,8 @@ background-color:#CCC; text-decoration:none; }
 	border-bottom:1px solid silver;
 	padding:18px 4px 4px 4px;
 	font:normal normal 10px OpenSans;
+		text-transform: uppercase;
+
 	position:relative;
 	margin-top:95px;
 	color:rgb(30,30,30);
@@ -206,8 +219,9 @@ background-color:#CCC; text-decoration:none; }
 	text-align: center;
 	overflow: hidden;
 	padding:18px 4px 4px 4px;
-	font:normal bold 17px IstokWeb;
+	font:normal bold 17px OpenSans;
 	top:105px;
+	text-transform: uppercase;
 	position:relative;
 	margin-top:95px;
 	margin-left:7px;
