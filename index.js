@@ -119,8 +119,10 @@ app.post('/load/:offset-:cnt', textParser, function(req, res) {
 				console.log(err);
 			var sql2 = '';
 			if (req.params.cnt < 1) {
-				sql2 = "SELECT id, title, shortDesc, thumbImage FROM news " +
-					"WHERE id=" + result[0].titleID;
+				sql2 = "SELECT id, title, shortDesc, thumbImage, " +
+				"(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce, " +
+				"(SELECT COUNT(titleID) FROM comments WHERE comments.titleID=news.id) AS comments " +
+				" FROM news WHERE id=" + result[0].titleID;
 			} else {
 				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage, " +
 					"(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce, " +

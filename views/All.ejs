@@ -18,40 +18,10 @@
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/client.js"></script>
 		<script src="/scripts/main.js"></script>
-
-				<script>
-		$(document).ready(function() {   
-			$('#modal').click(function(e) {
-			e.preventDefault();
-			var id = $(this).attr('href');
-			var maskHeight = $(document).height();
-			var maskWidth = $(window).width();
-			$('#mask').css({'width':maskWidth,'height':maskHeight});
-			$('#mask').fadeIn(900); 
-			$('#mask').fadeTo("slow",0.7); 
-			var winH = $(window).height();
-			var winW = $(window).width();
-			$(id).css('top',  winH/2-$(id).height()/2);
-			$(id).css('left', winW/2-$(id).width()/2);
-			$(id).fadeIn(1800); 
-			});
-			$('.window .close1').click(function (e) { 
-			e.preventDefault();
-			$('#mask, .window').hide();
-			}); 
-			$('#mask').click(function () {
-			$(this).hide();
-			$('.window').hide();
-			}); 
-		   });  
-		</script>
-		
 		<script>
 			var newsLoaded = 0;
 			var noMore = false;
 			function pageLoaded() {
-				var uData = { "name": $("#uname").val() };
-
 				document.getElementById('hall').className = 'active';
 				//while (loadMore());
 				loadMore(true);
@@ -60,21 +30,11 @@
 					if (this.readyState == 4) {
 						if (this.status == 200) {
 							var obj = JSON.parse(this.responseText);
-							$("#hExit").show()
-							$("#hExit2").hide()
-							$("#hEnter").hide()	
-							$("#hProfile").show()	
-							if (uData.name.length > 0)
-								$("#hProfile2").html(uData.name);
-							//showLogOut(obj.name, $("#hEnter"));
+							showLogOut2(obj.name);
 						}
 						else {
-							$("#hExit").hide();
-							$("#hEnter").show()	;
-							$("#hExit2").hide();
-							$("#hProfile").hide()	
-							//showLogIn($('#hEnter'));
-							}
+							showLogIn2();
+						}
 					}
 				};
 				xhttp.open("POST", "/api/auth", true);
