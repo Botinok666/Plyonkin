@@ -72,8 +72,10 @@ function loadHeadTitle() {
 				var h3c = $('<h3/>').appendTo($('.main_news'));
 				var a1 = $('<a/>', { 'href': '/titles/' + obj[0].id }).html(obj[0].title).appendTo(h3c);
 				var p0 = $('<p/>').html(obj[0].shortDesc).appendTo($('.main_news'));
-				$('<h1/>').html('&#10000; ' + obj[0].comments).appendTo(p0);
-				$('<h1/>').html('&#x2764; ' + (obj[0].loyce == null ? 0 : obj[0].loyce)).appendTo(p0);
+				var divc1 = $('<div/>').appendTo(p0);
+
+				$('<h1/>').html('&#10000; ' + obj[0].comments).appendTo(divc1);
+				$('<h1/>').html('&#x2764; ' + (obj[0].loyce == null ? 0 : obj[0].loyce)).appendTo(divc1);
 			}
 		}
 	};
@@ -237,7 +239,29 @@ function regNew() {
 	$('#psw').val('');
 	$('#logInfo').html('Для завершения регистрации введите пароль ещё раз');
 }
+function regNew2() {
+document.location.href = "/Registraion";
+}
+function register2() {
+	var uData = { "name": $("#uname").val(), "password": $("#password").val(), "phoneNum": $("#phone").val(),
+		"name1": $("#name").val(), "name2": $("#patronymic").val(), "age": $("#age").val()};
 
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			if (obj.uID > -1) {
+				showLogOut(uData.name, $("#loginarea"));
+				$("#sendBtn").attr("disabled", false);
+			}
+			else
+				$("#logInfo").html(obj.text);
+		}
+	};
+	xhttp.open("POST", "/api/register", true);
+	xhttp.setRequestHeader("Content-type", "text/plain");
+	xhttp.send(JSON.stringify(uData));
+}
 function register(pwd) {
 	var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
 	if (pwd != uData.password) {

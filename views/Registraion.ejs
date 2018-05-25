@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<!-- Basic
+		================================================== -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<!-- CSS
+		================================================== -->
+		<link href="/css/registration.css" rel="stylesheet" type="text/css">
+		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/media.css" rel="stylesheet" type="text/css">
+		<!-- JS
+		================================================== -->
+		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="/scripts/pace.min.js"></script>
+		<script src="/scripts/main.js"></script>
+		<script src="/scripts/client.js"></script>
+		<script>
+			function pageLoaded() {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {
+							var obj = JSON.parse(this.responseText);
+							showLogOut2(obj.name);
+						}
+						else {
+							showLogIn2();
+														$("#hEnter").hide();
+
+						}
+					}
+				};
+				xhttp.open("POST", "/api/auth", true);
+				xhttp.send(null);
+			}
+		</script>
+		<script>
+		$(document).ready(function(){
+  $(".form-wrapper .button").click(function(){
+    var button = $(this);
+    var currentSection = button.parents(".section");
+    var currentSectionIndex = currentSection.index();
+    var headerSection = $('.steps li').eq(currentSectionIndex);
+    currentSection.removeClass("is-active").next().addClass("is-active");
+    headerSection.removeClass("is-active").next().addClass("is-active");
+
+    $(".form-wrapper").submit(function(e) {
+      e.preventDefault();
+    });
+
+    if(currentSectionIndex === 3){
+      $(document).find(".form-wrapper .section").first().addClass("is-active");
+      $(document).find(".steps li").first().addClass("is-active");
+    }
+  });
+});
+</script
+	</head>
+	<body onload='pageLoaded()'>
+
+		<div class="logo">
+			<% include header %>
+		</div>
+
+			<div class="container-fluid">
+							<div id='pcontent' class="rowProfile">
+
+				<div class="column">
+						<div id='tContent' class="content">
+	<ul class="steps">
+        <li class="is-active">Step 1</li>
+        <li>Step 2</li>
+        <li>Step 3</li>
+      </ul>
+					 <form class="form-wrapper">
+		  <fieldset class="section is-active">
+          <h3>Введите логин и пароль</h3>
+          <input type="text" name="uname" id="uname" placeholder="Логин">
+          <input type="password" name="password" id="password" placeholder="Пароль">
+		  <div class="button">Далее</div>
+        </fieldset>
+		 <fieldset class="section">
+          <h3>Введите своё настоящее имя и фамилию</h3>
+          <input type="text" name="name" id="name" placeholder="Имя">
+          <input type="text" name="patronymic" id="patronymic" placeholder="Фамилия">
+		  <div class="button">Далее</div>
+        </fieldset>
+        <fieldset class="section">
+          <h3>Введите свой номер телефона</h3>
+          <input type="text" name="phone" id="phone" placeholder="Номер телефона">
+		  <input type="text" name="age" id="age" placeholder="Возраст">
+          <input class="submit button" type="submit" onclick="register2()" value="Зарегистрироваться">
+
+        </fieldset>
+
+        <fieldset class="section">
+          <h3>Аккаунт был успешно создан!</h3>
+        </fieldset>
+      </form>	</div>
+				</div>
+
+				</div>
+			</div>
+			</div>
+		<% include footer %>
+	</body>
+</html>

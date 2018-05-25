@@ -53,15 +53,17 @@
 						if (obj.length > 0)
 							putPreviewTitle(obj[0], $("#leftCol"));
 						if (obj.length > 1)	
-							putPreviewTitle(obj[1], $("#rightCol"));
-						if (obj.length < 2)
+							putPreviewTitle(obj[1], $("#middleCol"));
+						if (obj.length > 2)	
+							putPreviewTitle(obj[2], $("#rightCol"));
+						if (obj.length < 1)
 							noMore = true;
 						newsLoaded += obj.length;
 						if (preload == true)
 							loadMore(true);
 					}
 				};
-				xhttp.open('POST', '/load/' + newsLoaded + '-' + '2', true);
+				xhttp.open('POST', '/load/' + newsLoaded + '-' + '3', true);
 				xhttp.send(null);
 			}
 		</script>
@@ -76,7 +78,7 @@
 		<p>Пароль</p> <input type="password" id="psw"/>
 		<p id="logInfo"></p>
 		<input type="button" class="log" id="Login" value="Войти" onclick='logIn2()'/>
-		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
+		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew2()'/>
 	</div>
 	</div>
 	</div>
@@ -88,7 +90,9 @@
 		<div class="container-fluid">
 			<div class="rowMain">
 				<div id="leftCol" class="column"></div>
+				<div id="middleCol" class="column"></div>
 				<div id="rightCol" class="column"></div>
+
 			</div>
 		</div>
 	</body>
