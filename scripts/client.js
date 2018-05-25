@@ -2,9 +2,9 @@ function showLogIn(elem) {
 	$(elem).empty();
 	$('#textfield').hide();
 	$('#sendBtn').hide();
-								$("#hExit2").hide()
-							$("#hExit").hide()
-							$("#hEnter").show()	
+	$("#hExit2").hide()
+	$("#hExit").hide()
+	$("#hEnter").show()	
 }
 
 function showLogOut(uname, elem) {
@@ -26,6 +26,15 @@ function putPreviewTitle(obj, elem) {
 	var h3c = $('<h3/>').html(obj.name).appendTo(divc);
 	var h2c = $('<h2/>').html(obj.shortDesc).appendTo(divc);
 	var ac2 = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc);
+	var h1c = $('<h1/>').html('&#x2764; ' + (obj.loyce == null ? 0 : obj.loyce)).appendTo(h2c);
+	var text = obj.comments;
+	if (obj.comments == 0 || obj.comments > 4)
+		text += ' комментариев';
+	else if (obj.comments == 1)
+		text += ' комментарий';
+	else
+		text += ' комментария';
+	var h2d = $('<h2/>').html(text).appendTo(h2c);
 	var pc = $('<p/>').html('Читать далее').appendTo(ac2);
 }
 

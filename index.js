@@ -122,7 +122,9 @@ app.post('/load/:offset-:cnt', textParser, function(req, res) {
 				sql2 = "SELECT id, title, shortDesc, thumbImage FROM news " +
 					"WHERE id=" + result[0].titleID;
 			} else {
-				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage " +
+				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage, " +
+					"(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce, " +
+					"(SELECT COUNT(titleID) FROM comments WHERE comments.titleID=news.id) AS comments " +
 					"FROM news LEFT JOIN users ON users.userID=news.authorID WHERE news.id<>" +
 					result[0].titleID + " ORDER BY news.id DESC LIMIT " + req.params.offset + ", " + req.params.cnt;
 			}

@@ -51,8 +51,8 @@
 			var noMore = false;
 			function pageLoaded() {
 				document.getElementById('hall').className = 'active';
-				while (loadMore());
-				loadMore();
+				//while (loadMore());
+				loadMore(true);
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4) {
@@ -75,8 +75,8 @@
 				xhttp.send(null);
 			}
 			
-			window.onscroll = function() {loadMore()};
-			function loadMore() {
+			window.onscroll = function() {loadMore(false)};
+			function loadMore(preload) {
 				if (noMore) return false;
 				if (document.documentElement.getBoundingClientRect().bottom >
 					document.documentElement.clientHeight + 100) return false;
@@ -91,11 +91,12 @@
 						if (obj.length < 2)
 							noMore = true;
 						newsLoaded += obj.length;
-						return true;
+						if (preload == true)
+							loadMore(true);
 					}
 				};
 				xhttp.open('POST', '/load/' + newsLoaded + '-' + '2', true);
-				xhttp.send(null);				
+				xhttp.send(null);
 			}
 		</script>
 	</head>
