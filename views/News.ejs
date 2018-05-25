@@ -20,6 +20,9 @@
 		<script src="/scripts/client.js"></script>
 		<script src="/scripts/client-smtp.js"></script>
 		<script>
+			var tID = <%= tID %>;
+		</script>
+						<script>
 		$(document).ready(function() {   
 			$('#modal').click(function(e) {
 			e.preventDefault();
@@ -45,22 +48,18 @@
 			}); 
 		   });  
 		</script>
-		<script>
-			var tID = <%= tID %>;
-		</script>
 	</head>
 	<body onload='myLoad(tID)'>
-
-	<!-- Само окно -->
+		<!-- Само окно -->
 	<div id="boxes">  
-	<div id="dialog" class="window"> Текст модального окна
+	<div id="dialog" class="window"> 
 	<div class="top"><a href="#" class="link close1"/><img src="/images/ModalClose.png"/ width="20" height="20"></a></div>
 	<div class="content2">
 		<p>Логин</p> <input type="text" id="uname"/>
 		<p>Пароль</p> <input type="password" id="psw"/>
 		<p id="logInfo"></p>
-		<input type="button" id="Login" value="Войти" onclick='logIn(tID)'/>
-		<input type="button" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
+		<input type="button" class="log" id="Login" value="Войти" onclick='logIn(tID)'/>
+		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
 	</div>
 	</div>
 	</div>
@@ -73,7 +72,6 @@
 			<div class="container-fluid">
 				<div class="rowNews">
 						<div class="column">
-							<a href="#dialog" id="modal">Авторизация на сайте</a>
 							<p id='loginarea'>Jackety-</p>
 							<div id='tContent' class="content">
 							

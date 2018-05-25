@@ -1,95 +1,11 @@
 .link {font-size: 16; color:#ffffff; text-decoration:none }
 .link:hover {color:#CCC; text-decoration:none; 	transition: .5s;
 }  
-#mask {
-    position:absolute;
-    left:0;
-    top:0;
-    z-index:9000;
-    background-color:#000;
-    display:none;
-    }
-#boxes .window {
-    position:fixed;
-    left:0;
-    top:0px;
-    -top: 40px;
-    width:440px;
-    display:none;
-    z-index:9999;
-    padding: 20px;
-    overflow: hidden;
-    }  
-#boxes #dialog {
-    width:375px; 
-    padding:10px;
-    background-color:#ffffff;
-    }  
-.top {
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:30px;
-    background: #0085cc;
-    padding: 8px 15px 6px 10px;
-    }
-	
-.close1 {
-	margin-top:-7px;
 
-    float:right;
-    }
-.content2 {
-    padding-top: 10px;
-}
-.content2 p {
-	text-align: center;
-		margin:0;
-}
-.content2 input[type=text] {
-	border:1px solid silver;
 
-    margin-bottom: 10px;
-text-align: center;
-	width: 100%;
-}
-.content2 input[type=password] {
-		border:1px solid silver;
-
-	text-align: center;
-	width: 100%;
-}
-
-.content2 input[type=button] {
-	border:0;
-	height:32px;
-	width: 175px;
-	margin-top:30px;
-	background: #0054a5;
-	color:#eee;
-	display: inline-block;
-}
-.content2 input[type=button]:hover {
-	transition: .5s;
-   background: silver;
-}
 
 #nocommentstext {
 	text-align: center;
-}
-#modal {
-	text-align:center;
-}
-#loginarea {
-	display:block;
-	text-align:center;
-
-}
-#loginarea input[type=button]{
-	position: relative;
-	bottom:-10px;
-display: block;margin: 0 auto;
 }
 
 #loyceBtn {
@@ -136,6 +52,8 @@ padding-right: 2px;
 	font:normal normal 13px IstokWeb;
 	color:rgb(50,50,50);
 }
+
+
 #sendBtn {
 	background-color:#0177D9;
 	color: white;

@@ -2,14 +2,20 @@ function showLogIn(elem) {
 	$(elem).empty();
 	$('#textfield').hide();
 	$('#sendBtn').hide();
+								$("#hExit2").hide()
+							$("#hExit").hide()
+							$("#hEnter").show()	
 }
 
 function showLogOut(uname, elem) {
 	$(elem).empty();
 	$('#modal').hide();
-	var form0 = $('<form/>').html('Вы вошли как ').appendTo(elem);
-	var a0 = $('<a/>', { 'href': '/profile' }).html(uname).appendTo(form0);
-	var input0 = $('<input/>', { 'type': 'button', 'onclick': 'logOut()', 'value': 'Выйти' }).appendTo(form0);
+	$("#hExit").hide()
+	$("#hEnter").hide()	
+	$("#hExit2").show ()
+	//var form0 = $('<form/>').html('Вы вошли как ').appendTo(elem);
+	//var a0 = $('<a/>', { 'href': '/profile' }).html(uname).appendTo(form0);
+	//var input0 = $('<input/>', { 'type': 'button', 'onclick': 'logOut()', 'value': 'Выйти' }).appendTo(form0);
 }
 
 function putPreviewTitle(obj, elem) {
@@ -139,6 +145,31 @@ function postComm(tID)	{
 	$("#textfield").val("");
 }
 
+function logIn2() {
+	var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
+	if ((uData.name.length < 3) || (uData.password.length < 3)) {
+		$("#logInfo").html("Имя и пароль должны состоять хотя бы из 3 символов!");
+		return;
+	}
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			if (obj.uID > -1) {
+				//showLogOut(uData.name, $("#loginarea"));
+				$('#hExit').show();
+				$('#hEnter').hide();
+				$('.window').hide();
+				$('#mask, .window').hide();
+			}
+			else
+				$("#logInfo").html(obj.text);
+		}
+	};
+	xhttp.open("POST", "/api/login", true);
+	xhttp.setRequestHeader("Content-type", "text/plain");
+	xhttp.send(JSON.stringify(uData));
+}
 function logIn(tID) {
 	var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
 	if ((uData.name.length < 3) || (uData.password.length < 3)) {
@@ -203,20 +234,32 @@ function register(pwd) {
 	xhttp.setRequestHeader("Content-type", "text/plain");
 	xhttp.send(JSON.stringify(uData));
 }
-
-function logOut() {
+function logOut2() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			showLogIn($('#loginarea'));
 			$("#sendBtn").attr("disabled", true);
 			$('#modal').show();
+			$("#hExit2").hide()
+			$("#hExit").hide()
+			$("#hEnter").show()	
 		}
 	};
 	xhttp.open("POST", "/api/logout", true);
 	xhttp.send(null);
 }
-
+function logOut() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+							$("#hExit").hide()
+							$("#hEnter").show()	
+		}
+	};
+	xhttp.open("POST", "/api/logout", true);
+	xhttp.send(null);
+}
 function myLoad(tID) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -225,9 +268,17 @@ function myLoad(tID) {
 				var obj = JSON.parse(this.responseText);
 				showLogOut(obj.name, $("#loginarea"));
 				$("#sendBtn").attr("disabled", false);
+				$("#hExit").hide()
+				$("#hEnter").hide()	
+				$("#hExit2").show()
 			}
-			else
+			else {
+								$("#hExit2").hide()
+							$("#hExit").hide()
+							$("#hEnter").show()	
+
 				showLogIn($('#loginarea'));
+			}
 		}
 	};
 	xhttp.open("POST", "/api/auth", true);

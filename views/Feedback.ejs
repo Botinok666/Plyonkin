@@ -14,16 +14,36 @@
 		<link href="/css/media.css" rel="stylesheet" type="text/css">
 		<link href="/css/feedback.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"> 
-		<!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
 		<!-- JS
 		================================================== -->
 		<script src="/scripts/jquery-3.2.1.min.js"></script>
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/main.js"></script>
+		<script src="/scripts/client.js"></script>
 		<script src="/scripts/client-smtp.js"></script>
 		<script>
 			function pageLoaded() {
 				document.getElementById('hfeedback').className = 'active';
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {
+							var obj = JSON.parse(this.responseText);
+							$("#hExit").show()
+							$("#hExit2").hide()
+							$("#hEnter").hide()	
+							//showLogOut(obj.name, $("#hEnter"));
+						}
+						else {
+							$("#hExit").hide()
+							$("#hEnter").show()	
+							$("#hExit2").hide()
+							//showLogIn($('#hEnter'));
+							}
+					}
+				};
+				xhttp.open("POST", "/api/auth", true);
+				xhttp.send(null);
 			}
 			function sendFeedBack() {
 				var uData = {
@@ -31,6 +51,7 @@
 					email: document.getElementById('cEmail').value,
 					text: document.getElementById('cMessage').value
 				};
+
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
@@ -47,10 +68,49 @@
 				xhttp.send(JSON.stringify(uData));
 			}
 		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+				<script>
+		$(document).ready(function() {   
+			$('#modal').click(function(e) {
+			e.preventDefault();
+			var id = $(this).attr('href');
+			var maskHeight = $(document).height();
+			var maskWidth = $(window).width();
+			$('#mask').css({'width':maskWidth,'height':maskHeight});
+			$('#mask').fadeIn(900); 
+			$('#mask').fadeTo("slow",0.7); 
+			var winH = $(window).height();
+			var winW = $(window).width();
+			$(id).css('top',  winH/2-$(id).height()/2);
+			$(id).css('left', winW/2-$(id).width()/2);
+			$(id).fadeIn(1800); 
+			});
+			$('.window .close1').click(function (e) { 
+			e.preventDefault();
+			$('#mask, .window').hide();
+			}); 
+			$('#mask').click(function () {
+			$(this).hide();
+			$('.window').hide();
+			}); 
+		   });  
+		</script>	
 	</head>
 	<body onload='pageLoaded()'>
+			<!-- Само окно -->
+	<div id="boxes">  
+	<div id="dialog" class="window"> 
+	<div class="top"><a href="#" class="link close1"/><img src="/images/ModalClose.png"/ width="20" height="20"></a></div>
+	<div class="content2">
+		<p>Логин</p> <input type="text" id="uname"/>
+		<p>Пароль</p> <input type="password" id="psw"/>
+		<p id="logInfo"></p>
+		<input type="button" class="log" id="Login" value="Войти" onclick='logIn2()'/>
+		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
+	</div>
+	</div>
+	</div>
+	<!-- Маска, затемняющая фон -->
+	<div id="mask"></div>
 		<div class="logo">
 			<% include header %>
 		</div>
@@ -80,7 +140,5 @@
 		</div>
 		<% include footer %>
 	</body>
-<!-- asset bootstrap -->
-<!-- <script src="/assets/js/bootstrap.min.js" type="application/javascript"></script> -->
 </html>
 
