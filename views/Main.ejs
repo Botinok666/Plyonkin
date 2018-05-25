@@ -18,16 +18,59 @@
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/client.js"></script>
 		<script src="/scripts/main.js"></script>
+ 
 		<script>
 			function pageLoaded() {
 				document.getElementById('hnews').className = 'active';
 				loadHeadTitle();
-				loadMainPageTitles();
 				loadPopular();
+				loadMainPageTitles();
+				var uData = { "name": $("#uname").val() };
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {
+							var obj = JSON.parse(this.responseText);
+							$("#hExit").show()
+							$("#hExit2").hide()
+							$("#hEnter").hide()	
+							$("#hProfile").show()	
+							if (uData.name.length > 0)
+								$("#hProfile2").html(uData.name);
+							//showLogOut(obj.name, $("#hEnter"));
+						}
+						else {
+							$("#hExit").hide();
+							$("#hEnter").show()	;
+							$("#hExit2").hide();
+							$("#hProfile").hide()	;
+
+							//showLogIn($('#hEnter'));
+							}
+					}
+				};
+				xhttp.open("POST", "/api/auth", true);
+				xhttp.send(null);
+
 			}
 		</script>
 	</head>
-	<body onload='pageLoaded()'>
+	<body onload='pageLoaded()' >
+		<!-- Само окно -->
+	<div id="boxes">  
+	<div id="dialog" class="window"> 
+	<div class="top"><a href="#" class="link close1"/><img src="/images/ModalClose.png"/ width="20" height="20"></a></div>
+	<div class="content2">
+		<p>Логин</p> <input type="text" id="uname"/>
+		<p>Пароль</p> <input type="password" id="psw"/>
+		<p id="logInfo"></p>
+		<input type="button" class="log" id="Login" value="Войти" onclick='logIn2()'/>
+		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
+	</div>
+	</div>
+	</div>
+	<!-- Маска, затемняющая фон -->
+	<div id="mask"></div>
 		<div class="logo">
 			<% include header %>
 			<div class="container-fluid">

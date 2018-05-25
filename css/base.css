@@ -1,4 +1,117 @@
 @import url("fonts.css");
+#mask {position:absolute;
+    left:0;
+    top:0;
+    z-index:9;
+    background-color:#000;
+    display:none;
+    }
+#boxes .window {
+    position:fixed;
+    left:0;
+    top:0px;
+    -top: 40px;
+    width:325px;
+    display:none;
+    z-index:999;
+    overflow: hidden;
+	border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+    }  
+#boxes #dialog {
+    width:325px; 
+    background-color:#ffffff;
+    }  
+	#modal {
+	text-align:center;
+}
+#loginarea {
+	display:block;
+	text-align:center;
+
+}
+#loginarea input[type=button]{
+	position: relative;
+	bottom:-10px;
+display: block;margin: 0 auto;
+}
+.close1 {
+	margin-top:-7px;
+
+    float:right;
+    }
+.content2 {
+    padding-top: 10px;
+}
+.content2 p {
+	font:normal normal 14px HelveticaLight;
+
+	text-align: center;
+}
+.top {padding: 10px 5px 6px 0px;background: rgb(15,15,15);
+height: 10px;}
+	
+
+.content2 input[type=text], .content2 input[type=password] {
+	  border-bottom:1px solid rgba(0,0,0,.1);
+
+	border-top: 0;
+	border-right: 0;
+	border-left: 0;
+	padding-bottom: 5px;
+  font-family: 'Open Sans', sans-serif;
+  text-transform:uppercase;
+  color:#858585;
+  font-weight:lighter;
+  -webkit-transition:.5s;
+  transition:.5s;
+	text-align: center;
+	width: 90%;
+	display: block;
+
+margin: 5px auto 10px auto;
+}  
+.content2 input[type=text]:hover,.content2 input[type=password]:hover,
+  .content2 input[type=text]:focus,.content2 input[type=password]:focus,
+  .content2 input[type=text]:active:focus,.content2 input[type=password]:active:focus{
+    color:#4C94FF;
+    outline:none;
+    border-bottom:1px solid #4C94FF;
+  }
+
+.log  {
+	font-family: 'Open Sans', sans-serif;
+font-size: medium;
+	height:36px;
+
+	transition: .5s;
+	margin-right: 0px;
+	float: left;
+	border:0;
+	width: 137.6px;
+	background: #0065B6;
+	color:#eee;
+		margin-top:29px;
+}
+.log:hover {
+   background: silver;
+}
+.reg  {
+		font-family: 'Open Sans', sans-serif;
+font-size: medium;
+	height:36px;
+	transition: .5s;
+	margin-right: 0px;
+	float: left;
+	border:0;
+	width: 187.4px;
+	margin-top:29px;
+	background: #673ab7;
+	color:#eee;
+}
+.reg:hover {
+   background: silver;
+}
 body {
 	background-color:#f5f5f5;
     margin:0px 0px 0px 0px;
@@ -28,10 +141,9 @@ body {
     padding-bottom:5px;
     padding-top: 30px;
     margin-top: 30px;
-	
+	width: 890px;
 }
 .menu ul {
-    width: 700px;
     margin-right: auto;
 	margin-left: auto;
 	padding:0 0 18px 0;
@@ -45,18 +157,15 @@ body {
 	font:normal normal 16px Trebuchet MS;
 	list-style:none;
 	float:left;
- 	margin:0 0 0 120px;
-}
-.menu ul li:not(.active):hover {
-	transition-property:all;
+		transition-property:all;
 	transition-duration:0.1s;
 	transition-timing-function:ease-in-out, ease, ease;
+ 	margin:0 0 0 60px;
+}
+.menu ul li:not(.active):hover {
 	border-top:3px solid rgba(250,250,250,0.75);
 }
 .menu ul li:not(.active):not(:hover) {
-	transition-property:all;
-	transition-duration:0.1s;
-	transition-timing-function:ease-in-out, ease, ease;
 	border-top:0px solid rgba(250,250,250,0.75);
 }
 .active a {
@@ -75,6 +184,8 @@ body {
 	background-size: 24px 16px, auto;
 }
 #mc-form input[type=submit] {
+	top: -1px;
+	transition: .5s;
 	margin: 0 .3rem 1.2rem 0;
 	display: inline-block;
     font-family: OpenSans;
@@ -83,21 +194,17 @@ body {
 	text-decoration: none;
     height: 2.8rem;
 	line-height: 2.6rem;
-	padding: 0 3rem;
-	position: absolute;
-    padding: 0 15px;
+    padding: 0 16px;
 	color: #FFFFFF;
 	background: #0054a5;
 	border-color: #0054a5;
-	border-radius: 0 3px 3px 0;
+	border-radius: 0 2px 2px 0;
 	text-align: center;
 	border-radius: 3px;
 	cursor: pointer;
 	border: 0;
 }
 #mc-form input[type=submit]:hover {
-		transition: .5s;
-
    background: silver;
    border-color: silver;
 }
@@ -221,6 +328,4 @@ body {
     color: #E1EAEB;
 }
 
-.container-fluid {
-    padding: 0 !important;
-}
+.container-fluid {padding: 0 !important}
