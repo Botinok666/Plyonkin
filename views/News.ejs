@@ -18,35 +18,8 @@
 		<script src="/scripts/pace.min.js"></script>
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/client.js"></script>
-		<script src="/scripts/client-smtp.js"></script>
 		<script>
 			var tID = <%= tID %>;
-		</script>
-						<script>
-		$(document).ready(function() {   
-			$('#modal').click(function(e) {
-			e.preventDefault();
-			var id = $(this).attr('href');
-			var maskHeight = $(document).height();
-			var maskWidth = $(window).width();
-			$('#mask').css({'width':maskWidth,'height':maskHeight});
-			$('#mask').fadeIn(900); 
-			$('#mask').fadeTo("slow",0.7); 
-			var winH = $(window).height();
-			var winW = $(window).width();
-			$(id).css('top',  winH/2-$(id).height()/2);
-			$(id).css('left', winW/2-$(id).width()/2);
-			$(id).fadeIn(1800); 
-			});
-			$('.window .close1').click(function (e) { 
-			e.preventDefault();
-			$('#mask, .window').hide();
-			}); 
-			$('#mask').click(function () {
-			$(this).hide();
-			$('.window').hide();
-			}); 
-		   });  
 		</script>
 	</head>
 	<body onload='myLoad(tID)'>
@@ -72,7 +45,6 @@
 			<div class="container-fluid">
 				<div class="rowNews">
 						<div class="column">
-							<p id='loginarea'>Jackety-</p>
 							<div id='tContent' class="content">
 							
 								<img class='imgcol' src='<%= nImage %>'/>

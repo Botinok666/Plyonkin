@@ -325,7 +325,8 @@ function retLoyces(res, con, tID, lval) {
 }
 app.post('/getPopular', textParser, function(req, res) {
 	var sql = "SELECT id, title, " 
-		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
+		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce, "
+		+ "(SELECT COUNT(titleID) FROM comments WHERE comments.titleID=news.id) AS comments "
 		+ "FROM news ORDER BY loyce DESC LIMIT 4";
 	pool.getConnection(function(error, con) {
 		con.query(sql, function(err, result) {

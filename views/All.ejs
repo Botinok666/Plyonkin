@@ -50,6 +50,8 @@
 			var newsLoaded = 0;
 			var noMore = false;
 			function pageLoaded() {
+				var uData = { "name": $("#uname").val() };
+
 				document.getElementById('hall').className = 'active';
 				//while (loadMore());
 				loadMore(true);
@@ -61,12 +63,16 @@
 							$("#hExit").show()
 							$("#hExit2").hide()
 							$("#hEnter").hide()	
+							$("#hProfile").show()	
+							if (uData.name.length > 0)
+								$("#hProfile2").html(uData.name);
 							//showLogOut(obj.name, $("#hEnter"));
 						}
 						else {
-							$("#hExit").hide()
-							$("#hEnter").show()	
-							$("#hExit2").hide()
+							$("#hExit").hide();
+							$("#hEnter").show()	;
+							$("#hExit2").hide();
+							$("#hProfile").hide()	
 							//showLogIn($('#hEnter'));
 							}
 					}

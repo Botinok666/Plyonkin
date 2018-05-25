@@ -24,7 +24,7 @@
 .form2 h1 {
 	text-align: center;
 	font: normal normal 18px HelveticaLight;
-
+padding-top: 10px;
 
 }
 .form2 hr {
@@ -33,12 +33,23 @@
    color: rgb(192, 192, 192); /* Цвет линии для IE6-7 */
     height: 1px; /* Толщина линии */
 }
-.form2 p {
-		text-align: center;
-
+.form2 p {text-align: center;
+font: normal normal 14px HelveticaLight;
 	display: block;
 }
 .form2 input[type=text]{
+	font-size: medium;
+	-webkit-transition:.5s;
+	transition:.5s;
+	font-weight:lighter;
+	color:#858585;
+	text-transform:uppercase;
+	font-family: 'Open Sans', sans-serif;
+	padding-bottom: 5px;
+	border-top: 0;
+	border-right: 0;
+	border-left: 0;
+	border-bottom:1px solid rgba(0,0,0,.1);
 	text-align: center;
 	margin: 0 auto;
 	width: 70%;
@@ -54,3 +65,12 @@
 	margin: 15px auto 0 auto;
 	display: block;
 }
+
+
+.form2 input[type=text]:hover,
+.form2 input[type=text]:focus,
+.form2 input[type=text]:active:focus{
+    color:#4C94FF;
+    outline:none;
+    border-bottom:1px solid #4C94FF;
+  }

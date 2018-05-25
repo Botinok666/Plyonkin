@@ -1,9 +1,8 @@
 @import url("fonts.css");
-#mask {
-    position:absolute;
+#mask {position:absolute;
     left:0;
     top:0;
-    z-index:900;
+    z-index:9;
     background-color:#000;
     display:none;
     }
@@ -16,7 +15,8 @@
     display:none;
     z-index:999;
     overflow: hidden;
-	
+	border-top-left-radius: 5px;
+border-top-right-radius: 5px;
     }  
 #boxes #dialog {
     width:325px; 
@@ -47,58 +47,65 @@ display: block;margin: 0 auto;
 	font:normal normal 14px HelveticaLight;
 
 	text-align: center;
-		margin:0;
 }
-.top {
-height: 10px;
-
-background: #0085cc;
-
-padding: 10px 5px 6px 0px;
-    }
+.top {padding: 10px 5px 6px 0px;background: rgb(15,15,15);
+height: 10px;}
 	
 
-.content2 input[type=text] {
-	border:1px solid silver;
+.content2 input[type=text], .content2 input[type=password] {
+	  border-bottom:1px solid rgba(0,0,0,.1);
 
-text-align: center;
+	border-top: 0;
+	border-right: 0;
+	border-left: 0;
+	padding-bottom: 5px;
+  font-family: 'Open Sans', sans-serif;
+  text-transform:uppercase;
+  color:#858585;
+  font-weight:lighter;
+  -webkit-transition:.5s;
+  transition:.5s;
+	text-align: center;
 	width: 90%;
 	display: block;
 
 margin: 5px auto 10px auto;
-}
-.content2 input[type=password] {
-	border:1px solid silver;
-
-text-align: center;
-	width: 90%;
-	display: block;
-
-margin: 5px auto 10px auto;
-}
+}  
+.content2 input[type=text]:hover,.content2 input[type=password]:hover,
+  .content2 input[type=text]:focus,.content2 input[type=password]:focus,
+  .content2 input[type=text]:active:focus,.content2 input[type=password]:active:focus{
+    color:#4C94FF;
+    outline:none;
+    border-bottom:1px solid #4C94FF;
+  }
 
 .log  {
+	font-family: 'Open Sans', sans-serif;
+font-size: medium;
+	height:36px;
+
 	transition: .5s;
 	margin-right: 0px;
 	float: left;
 	border:0;
-	height:34px;
 	width: 137.6px;
-	margin-top:30px;
-	background: #0054a5;
+	background: #0065B6;
 	color:#eee;
+		margin-top:29px;
 }
 .log:hover {
    background: silver;
 }
 .reg  {
+		font-family: 'Open Sans', sans-serif;
+font-size: medium;
+	height:36px;
 	transition: .5s;
 	margin-right: 0px;
 	float: left;
 	border:0;
-	height:34px;
 	width: 187.4px;
-	margin-top:30px;
+	margin-top:29px;
 	background: #673ab7;
 	color:#eee;
 }
@@ -134,10 +141,9 @@ body {
     padding-bottom:5px;
     padding-top: 30px;
     margin-top: 30px;
-	
+	width: 890px;
 }
 .menu ul {
-    width: 710px;
     margin-right: auto;
 	margin-left: auto;
 	padding:0 0 18px 0;
@@ -322,6 +328,4 @@ body {
     color: #E1EAEB;
 }
 
-.container-fluid {
-    padding: 0 !important;
-}
+.container-fluid {padding: 0 !important}

@@ -54,11 +54,11 @@ function pLoad() {
 		if (this.readyState == 4) {
 			if (this.status == 200) {
 				var obj = JSON.parse(this.responseText);
-				showUserPicForm($('#tContent'));
+				//showUserPicForm($('#tContent'));
 				if (obj.accLevel == 2) {
-					var br = $('<br>').appendTo($('#tContent'));
+					//var br = $('<br>').appendTo($('#tContent'));
 					showNewsUploadForm($('#tContent'));
-					showMainTitleSetForm($('#tContent'));
+					//showMainTitleSetForm($('#tContent'));
 				}
 			}
 		}

@@ -5,6 +5,7 @@ function showLogIn(elem) {
 	$("#hExit2").hide()
 	$("#hExit").hide()
 	$("#hEnter").show()	
+	$('#hProfile').hide();		
 }
 
 function showLogOut(uname, elem) {
@@ -12,7 +13,9 @@ function showLogOut(uname, elem) {
 	$('#modal').hide();
 	$("#hExit").hide()
 	$("#hEnter").hide()	
-	$("#hExit2").show ()
+	$("#hExit2").show()
+					$('#hProfile').show();		
+				$('#hProfile2').html(uname);	
 	//var form0 = $('<form/>').html('Вы вошли как ').appendTo(elem);
 	//var a0 = $('<a/>', { 'href': '/profile' }).html(uname).appendTo(form0);
 	//var input0 = $('<input/>', { 'type': 'button', 'onclick': 'logOut()', 'value': 'Выйти' }).appendTo(form0);
@@ -20,22 +23,22 @@ function showLogOut(uname, elem) {
 
 function putPreviewTitle(obj, elem) {
 	var divc = $('<div/>', { 'class': 'content' }).appendTo(elem);
-	var ac = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc);
+	var divc4 = $('<div/>', { 'class': 'picblock' }).appendTo(divc);
+	var ac = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc4);
 	var imgc = $('<img/>', { 'class': 'imgcol', 'src': '/images/' + obj.thumbImage }).appendTo(ac);
 	var h4c = $('<h4/>').html(obj.title).appendTo(divc);
 	var h3c = $('<h3/>').html(obj.name).appendTo(divc);
 	var h2c = $('<h2/>').html(obj.shortDesc).appendTo(divc);
-	var ac2 = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc);
-	var h1c = $('<h1/>').html('&#x2764; ' + (obj.loyce == null ? 0 : obj.loyce)).appendTo(h2c);
-	var text = obj.comments;
-	if (obj.comments == 0 || obj.comments > 4)
-		text += ' комментариев';
-	else if (obj.comments == 1)
-		text += ' комментарий';
-	else
-		text += ' комментария';
-	var h2d = $('<h2/>').html(text).appendTo(h2c);
-	var pc = $('<p/>').html('Читать далее').appendTo(ac2);
+	var divc2 = $('<div/>', { 'class': 'loyceblock' }).appendTo(divc);
+
+	var text = '&#10000;' + " " + obj.comments + " ";
+
+	var h2d = $('<h1/>').html(text).appendTo(divc2);
+	var h1c = $('<h1/>').html('&#x2764; ' + (obj.loyce == null ? 0 : obj.loyce)).appendTo(divc2);
+		
+	var divc3 = $('<div/>', { 'class': 'buttonblock' }).appendTo(divc);
+	var ac2 = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc3);
+	$('<p/>').html('Читать далее').appendTo(ac2);
 }
 
 function putComment(obj, elem) {
@@ -62,9 +65,12 @@ function loadHeadTitle() {
 				var h3c = $('<h3/>').appendTo($('.main_news'));
 				var a1 = $('<a/>', { 'href': '/titles/' + obj[0].id }).html(obj[0].title).appendTo(h3c);
 				var p0 = $('<p/>').html(obj[0].shortDesc).appendTo($('.main_news'));
+	var p01 = $('<h1/>').html('&#x2764; ' + (obj[0].loyce == null ? 0 : obj[0].loyce)).appendTo(p0);
+
 			}
 		}
 	};
+
 	xhttp.open("POST", "/load/0-0", true);
 	xhttp.send(null);
 }
@@ -80,9 +86,13 @@ function loadPopular() {
 				var pp = $('<p/>').appendTo($('.popular'));
 				var ap = $('<a/>', { 'href': '/titles/' + obj[x].id }).html(obj[x].title).appendTo(pp);
 				var bp = $('<h2/>').html(' &#x2764; ' + (obj[x].loyce == null ? 0 : obj[x].loyce)).appendTo(pp);
+				$('<h2/>').html(' &#10000; ' + obj[x].comments).appendTo(pp);
+
+				
 			}
 		}
 	};
+
 	xhttp.open("POST", '/getPopular', true);
 	xhttp.send(null);
 }
@@ -170,6 +180,9 @@ function logIn2() {
 				$('#hEnter').hide();
 				$('.window').hide();
 				$('#mask, .window').hide();
+				$('#hProfile').show();		
+				$('#hProfile2').html(uData.name);			
+				
 			}
 			else
 				$("#logInfo").html(obj.text);
@@ -252,6 +265,7 @@ function logOut2() {
 			$('#modal').show();
 			$("#hExit2").hide()
 			$("#hExit").hide()
+			$('#hProfile').hide();			
 			$("#hEnter").show()	
 		}
 	};
@@ -262,14 +276,19 @@ function logOut() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-							$("#hExit").hide()
-							$("#hEnter").show()	
+			$("#hExit").hide()
+			$("#hExit2").hide()
+			$('#hProfile').hide();			
+
+			$("#hEnter").show()	
 		}
 	};
 	xhttp.open("POST", "/api/logout", true);
 	xhttp.send(null);
 }
 function myLoad(tID) {
+		var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4) {
@@ -279,12 +298,16 @@ function myLoad(tID) {
 				$("#sendBtn").attr("disabled", false);
 				$("#hExit").hide()
 				$("#hEnter").hide()	
+				$('#hProfile').show();			
+				$('#hProfile2').html(uData.name);	
+
 				$("#hExit2").show()
 			}
 			else {
-								$("#hExit2").hide()
-							$("#hExit").hide()
-							$("#hEnter").show()	
+				$("#hExit2").hide()
+				$("#hExit").hide()
+				$("#hEnter").show()	
+				$('#hProfile').hide();			
 
 				showLogIn($('#loginarea'));
 			}

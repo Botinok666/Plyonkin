@@ -10,10 +10,8 @@
 		================================================== -->
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
-		<!-- <link href="/css/main.css" rel="stylesheet" type="text/css"> -->
 		<link href="/css/media.css" rel="stylesheet" type="text/css">
 		<link href="/css/feedback.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"> 
 		<!-- JS
 		================================================== -->
 		<script src="/scripts/jquery-3.2.1.min.js"></script>
@@ -23,6 +21,7 @@
 		<script src="/scripts/client-smtp.js"></script>
 		<script>
 			function pageLoaded() {
+				var uData = { "name": $("#uname").val() };
 				document.getElementById('hfeedback').className = 'active';
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
@@ -32,12 +31,16 @@
 							$("#hExit").show()
 							$("#hExit2").hide()
 							$("#hEnter").hide()	
+							$("#hProfile").show()	
+							if (uData.name.length > 0)
+								$("#hProfile2").html(uData.name);
 							//showLogOut(obj.name, $("#hEnter"));
 						}
 						else {
 							$("#hExit").hide()
 							$("#hEnter").show()	
 							$("#hExit2").hide()
+							$("#hProfile").hide()	
 							//showLogIn($('#hEnter'));
 							}
 					}
@@ -68,32 +71,6 @@
 				xhttp.send(JSON.stringify(uData));
 			}
 		</script>
-				<script>
-		$(document).ready(function() {   
-			$('#modal').click(function(e) {
-			e.preventDefault();
-			var id = $(this).attr('href');
-			var maskHeight = $(document).height();
-			var maskWidth = $(window).width();
-			$('#mask').css({'width':maskWidth,'height':maskHeight});
-			$('#mask').fadeIn(900); 
-			$('#mask').fadeTo("slow",0.7); 
-			var winH = $(window).height();
-			var winW = $(window).width();
-			$(id).css('top',  winH/2-$(id).height()/2);
-			$(id).css('left', winW/2-$(id).width()/2);
-			$(id).fadeIn(1800); 
-			});
-			$('.window .close1').click(function (e) { 
-			e.preventDefault();
-			$('#mask, .window').hide();
-			}); 
-			$('#mask').click(function () {
-			$(this).hide();
-			$('.window').hide();
-			}); 
-		   });  
-		</script>	
 	</head>
 	<body onload='pageLoaded()'>
 			<!-- Само окно -->
