@@ -45,7 +45,7 @@ body {
 	font:normal normal 16px Trebuchet MS;
 	list-style:none;
 	float:left;
- 	margin:0 0 0 120px;
+ 	margin:0 0 0 100px;
 }
 .menu ul li:not(.active):hover {
 	transition-property:all;

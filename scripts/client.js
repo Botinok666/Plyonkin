@@ -64,7 +64,7 @@ function loadPopular() {
 			for (x in obj) {
 				var pp = $('<p/>').appendTo($('.popular'));
 				var ap = $('<a/>', { 'href': '/titles/' + obj[x].id }).html(obj[x].title).appendTo(pp);
-				var bp = $('<h2/>').html(' &#x2764; ' + (obj[x].loyce == null ? 0 : obj[x].loyce)).appendTo($('.popular'));
+				var bp = $('<h2/>').html(' &#x2764; ' + (obj[x].loyce == null ? 0 : obj[x].loyce)).appendTo(pp);
 			}
 		}
 	};

@@ -87,6 +87,7 @@ body {overflow-x: hidden;}
 	position:relative;
 	margin-left:7px;
 	color:rgb(100,100,100);
+	
 }
 .content h3 {
 	border-bottom:1px solid silver;
@@ -145,7 +146,7 @@ font-weight: normal;
 font: normal normal 14px HelveticaLight;
 
 color: #0177D9;
-
+display: contents;
 
 margin-bottom: 20px;
 
