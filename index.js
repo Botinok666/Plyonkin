@@ -39,7 +39,7 @@ app.get('/all',function(req,res) {
 app.get('/titles/:tID', function(req, res) {
 	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name, " 
 		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
-		+ "FROM news RIGHT JOIN users ON news.authorID=users.userID WHERE news.id=?";
+		+ "FROM news INNER JOIN users ON news.authorID=users.userID WHERE news.id=?";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
 			con.release();
@@ -51,7 +51,7 @@ app.get('/titles/:tID', function(req, res) {
 				nImage: '/images/' + result[0].thumbImage,
 				nTitle: result[0].title,
 				nAuthor: result[0].name,
-				rate: result[0].loyce == null ? 0 : result[0].loyce
+				rate: (result[0].loyce == null ? 0 : result[0].loyce)
 				}, function(errs, thtml) {
 				if (errs)
 					console.log(errs);
@@ -348,6 +348,6 @@ app.post('/getPopular', textParser, function(req, res) {
 	});
 });
 
-app.listen(80, function(){
+app.listen(1666, function(){
     console.log('Node server running @ http://localhost')
 });
