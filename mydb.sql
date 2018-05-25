@@ -84,7 +84,7 @@ CREATE TABLE `loyces` (
   KEY `userID_idx` (`userID`),
   CONSTRAINT `titleID` FOREIGN KEY (`titleID`) REFERENCES `news` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `loyces` (
 
 LOCK TABLES `loyces` WRITE;
 /*!40000 ALTER TABLE `loyces` DISABLE KEYS */;
-INSERT INTO `loyces` VALUES (1,1,11,5),(2,1,12,5),(3,1,11,4),(4,1,13,4);
+INSERT INTO `loyces` VALUES (1,1,11,5),(2,1,12,5),(3,1,11,4),(4,1,13,4),(5,1,10,5);
 /*!40000 ALTER TABLE `loyces` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,13 +159,19 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` char(60) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
-  `created` double DEFAULT NULL,
-  `loggedIn` double DEFAULT NULL,
+  `name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `password` char(60) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `created` double NOT NULL,
+  `loggedIn` double NOT NULL,
   `userPic` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accLevel` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`userID`)
+  `phoneNum` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `realName` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `patronymic` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` tinyint(2) DEFAULT NULL,
+  `age` tinyint(3) DEFAULT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -175,7 +181,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Anton Drugalev','$2a$09$YNinB4FEwVBAlDmKPlqlfuBsCuspZxXHBYEIq4iGxsua2SncTZlva',1521820411813,1525096226834,NULL,2),(2,'Николай Закоморный','$2a$09$m4IP198rAA1pMlXmxnTLXuJDpfV4aJ8njnmENfcBW1unObdsCpJ1C',1521820411814,1522869173460,'u2.jpg',0),(3,'Great Master','$2a$09$fqcU1qfUdmilYis.0HWlkeBV4H4tmypJaAfq8MR8zEFb53aWUIF1S',1521970860429,1521970860429,NULL,0),(4,'Григорий Зотенко','$2a$09$IbnsI4eTG4NbSc2tNzjMLOGGr6BBrJJfhmJlTtEKCKJnPRBzrw5qu',1523181595846,1526740880492,'u4.jpeg',2),(5,'Andrew Barlit','$2a$09$Dz56rm0yqEszG6T4Q5ggTuOQkBVf4nERAC8WuUnADL64DxbJj6PXW',1523182262408,1526740720502,'u5.jpg',0),(6,'WalterWhite','$2a$09$hRxUpN6C0AtvTWpywvMM4.q2d1iW9LU38m7.d2cfR0ZSLugwMclN2',1523183119212,1523183413677,'u6.jpg',0),(7,'123','$2a$09$0XoKY9GrdwH15KpY.ca6lOSPZoMGyOMKeaw4P17Zh/MlbLvzDp33S',1523183353744,1523183438186,'u7.jpg',0);
+INSERT INTO `users` VALUES (1,'Anton Drugalev','$2a$09$YNinB4FEwVBAlDmKPlqlfuBsCuspZxXHBYEIq4iGxsua2SncTZlva',1521820411813,1527262754971,NULL,2,NULL,NULL,NULL,NULL,NULL),(2,'Николай Закоморный','$2a$09$m4IP198rAA1pMlXmxnTLXuJDpfV4aJ8njnmENfcBW1unObdsCpJ1C',1521820411814,1522869173460,'u2.jpg',0,NULL,NULL,NULL,NULL,NULL),(3,'Great Master','$2a$09$fqcU1qfUdmilYis.0HWlkeBV4H4tmypJaAfq8MR8zEFb53aWUIF1S',1521970860429,1521970860429,NULL,0,NULL,NULL,NULL,NULL,NULL),(4,'Григорий Зотенко','$2a$09$IbnsI4eTG4NbSc2tNzjMLOGGr6BBrJJfhmJlTtEKCKJnPRBzrw5qu',1523181595846,1527192750394,'u4.jpeg',2,NULL,NULL,NULL,NULL,NULL),(5,'Andrew Barlit','$2a$09$Dz56rm0yqEszG6T4Q5ggTuOQkBVf4nERAC8WuUnADL64DxbJj6PXW',1523182262408,1527257329257,'u5.jpg',0,NULL,NULL,NULL,NULL,NULL),(6,'WalterWhite','$2a$09$hRxUpN6C0AtvTWpywvMM4.q2d1iW9LU38m7.d2cfR0ZSLugwMclN2',1523183119212,1523183413677,'u6.jpg',0,NULL,NULL,NULL,NULL,NULL),(7,'123','$2a$09$0XoKY9GrdwH15KpY.ca6lOSPZoMGyOMKeaw4P17Zh/MlbLvzDp33S',1523183353744,1523183438186,'u7.jpg',0,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-19 18:33:49
+-- Dump completed on 2018-05-25 18:43:13
