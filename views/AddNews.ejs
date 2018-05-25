@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<!-- Basic
+		================================================== -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<!-- CSS
+		================================================== -->
+		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/AddNews.css" rel="stylesheet" type="text/css">
+		<link href="/css/media.css" rel="stylesheet" type="text/css">
+		<!-- JS
+		================================================== -->
+		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="/scripts/pace.min.js"></script>
+		<script src="/scripts/main.js"></script>
+		<script src="/scripts/AddNews.js"></script>
+		<script src="/scripts/client.js"></script>
+		<script src="/scripts/client-smtp.js"></script>
+		<script>
+			function profileLoad() {
+				var ulStatus = <%= ulStatus %>;
+				if (ulStatus == false)
+					window.alert('Загрузка не выполнена');
+				if (ulStatus == true)
+					window.alert('Загрузка выполнена!');
+				pLoad();
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {
+							var obj = JSON.parse(this.responseText);
+							showLogOut2(obj.name);
+						}
+						else {
+							showLogIn2();
+						}
+					}
+				};
+				xhttp.open("POST", "/api/auth", true);
+				xhttp.send(null);
+			}
+		</script>
+	</head>
+	<body onload='profileLoad()'>
+		<!-- Само окно -->
+	<div id="boxes">  
+	<div id="dialog" class="window"> 
+	<div class="top"><a href="#" class="link close1"/><img src="/images/ModalClose.png"/ width="20" height="20"></a></div>
+	<div class="content2">
+		<p>Логин</p> <input type="text" id="uname"/>
+		<p>Пароль</p> <input type="password" id="psw"/>
+		<p id="logInfo"></p>
+		<input type="button" class="log" id="Login" value="Войти" onclick='logIn2()'/>
+		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
+	</div>
+	</div>
+	</div>
+	<!-- Маска, затемняющая фон -->
+	<div id="mask"></div>
+		<div class="logo">
+			<% include header %>
+		</div>
+			<div class="container-fluid">
+							<div id='pcontent' class="rowProfile">
+
+				<div class="column">
+						<div id='tContent' class="content">
+	
+						</div>
+				</div>
+
+				</div>
+			</div>
+		<% include footer %>
+	</body>
+</html>

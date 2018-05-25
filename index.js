@@ -64,6 +64,9 @@ app.get('/titles/:tID', function(req, res) {
 app.get('/feedback', function(req, res) {
     res.render('Feedback');
 });
+app.get('/addnews', function(req, res) {
+    res.render('AddNews');
+});
 app.get('/registraion', function(req, res) {
     res.render('Registraion');
 });
