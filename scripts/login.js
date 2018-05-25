@@ -95,8 +95,8 @@ regnew: function(req, res) {
 					rtext.text = "Пользователь " + udata.name + " уже зарегистрирован!";
 			});
 			if (rtext.text.length == 0) {
-				sql = "INSERT INTO users (name, password, created, loggedIn) VALUES (?)";
-				var user = [udata.name, hash, time.getTime(), time.getTime()];
+				sql = "INSERT INTO users (name, password, created, loggedIn, phoneNum, realName, patronymic, age) VALUES (?)";
+				var user = [udata.name, hash, time.getTime(), time.getTime(), udata.phone, udata.name1, udata.name2, udata.age];
 				con.query(sql, [user], function(err, result) {
 					con.release();
 					if (err)

@@ -39,7 +39,7 @@ app.get('/all',function(req,res) {
 app.get('/titles/:tID', function(req, res) {
 	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name, " 
 		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
-		+ "FROM news RIGHT JOIN users ON news.authorID=users.userID WHERE news.id=?";
+		+ "FROM news INNER JOIN users ON news.authorID=users.userID WHERE news.id=?";
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.params.tID], function(err, result) {
 			con.release();
@@ -51,7 +51,7 @@ app.get('/titles/:tID', function(req, res) {
 				nImage: '/images/' + result[0].thumbImage,
 				nTitle: result[0].title,
 				nAuthor: result[0].name,
-				rate: result[0].loyce == null ? 0 : result[0].loyce
+				rate: (result[0].loyce == null ? 0 : result[0].loyce)
 				}, function(errs, thtml) {
 				if (errs)
 					console.log(errs);
@@ -63,6 +63,12 @@ app.get('/titles/:tID', function(req, res) {
 });
 app.get('/feedback', function(req, res) {
     res.render('Feedback');
+});
+app.get('/addnews', function(req, res) {
+    res.render('AddNews');
+});
+app.get('/registraion', function(req, res) {
+    res.render('Registraion');
 });
 app.get('/profile', function(req, res) {
 	var result = 'null';
@@ -119,8 +125,10 @@ app.post('/load/:offset-:cnt', textParser, function(req, res) {
 				console.log(err);
 			var sql2 = '';
 			if (req.params.cnt < 1) {
-				sql2 = "SELECT id, title, shortDesc, thumbImage FROM news " +
-					"WHERE id=" + result[0].titleID;
+				sql2 = "SELECT id, title, shortDesc, thumbImage, " +
+				"(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce, " +
+				"(SELECT COUNT(titleID) FROM comments WHERE comments.titleID=news.id) AS comments " +
+				" FROM news WHERE id=" + result[0].titleID;
 			} else {
 				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage, " +
 					"(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce, " +
@@ -340,6 +348,6 @@ app.post('/getPopular', textParser, function(req, res) {
 	});
 });
 
-app.listen(80, function(){
+app.listen(1666, function(){
     console.log('Node server running @ http://localhost')
 });

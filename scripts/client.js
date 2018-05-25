@@ -1,5 +1,4 @@
-function showLogIn(elem) {
-	$(elem).empty();
+function showLogIn2() {
 	$('#textfield').hide();
 	$('#sendBtn').hide();
 	$("#hExit2").hide()
@@ -7,36 +6,44 @@ function showLogIn(elem) {
 	$("#hEnter").show()	
 	$('#hProfile').hide();		
 }
-
+function showLogIn(elem) {
+	$(elem).empty();
+	showLogIn2();
+}
 function showLogOut(uname, elem) {
 	$(elem).empty();
 	$('#modal').hide();
 	$("#hExit").hide()
 	$("#hEnter").hide()	
 	$("#hExit2").show()
-					$('#hProfile').show();		
-				$('#hProfile2').html(uname);	
-	//var form0 = $('<form/>').html('Вы вошли как ').appendTo(elem);
-	//var a0 = $('<a/>', { 'href': '/profile' }).html(uname).appendTo(form0);
-	//var input0 = $('<input/>', { 'type': 'button', 'onclick': 'logOut()', 'value': 'Выйти' }).appendTo(form0);
+	$('#hProfile').show();		
+	$('#hProfile2').html(uname);	
 }
+function showLogOut2(uname) {
+	$('#modal').hide();
+	$("#hExit").hide()
+	$("#hEnter").hide()	
+	$("#hExit2").show()
+	$('#hProfile').show();		
+	$('#hProfile2').html(uname);	
+}
+
 
 function putPreviewTitle(obj, elem) {
 	var divc = $('<div/>', { 'class': 'content' }).appendTo(elem);
 	var divc4 = $('<div/>', { 'class': 'picblock' }).appendTo(divc);
 	var ac = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc4);
-	var imgc = $('<img/>', { 'class': 'imgcol', 'src': '/images/' + obj.thumbImage }).appendTo(ac);
-	var h4c = $('<h4/>').html(obj.title).appendTo(divc);
-	var h3c = $('<h3/>').html(obj.name).appendTo(divc);
-	var h2c = $('<h2/>').html(obj.shortDesc).appendTo(divc);
-	var divc2 = $('<div/>', { 'class': 'loyceblock' }).appendTo(divc);
-
+	$('<img/>', { 'class': 'imgcol', 'src': '/images/' + obj.thumbImage }).appendTo(ac);
+	$('<h4/>').html(obj.title).appendTo(divc);
+	$('<h3/>').html(obj.name).appendTo(divc);
+	$('<h2/>').html(obj.shortDesc).appendTo(divc);
+	
+	var divc2 = $('<div/>').appendTo(divc);
 	var text = '&#10000;' + " " + obj.comments + " ";
-
-	var h2d = $('<h1/>').html(text).appendTo(divc2);
-	var h1c = $('<h1/>').html('&#x2764; ' + (obj.loyce == null ? 0 : obj.loyce)).appendTo(divc2);
+	$('<h1/>').html(text).appendTo(divc2);
+	$('<h1/>').html('&#x2764; ' + (obj.loyce == null ? 0 : obj.loyce)).appendTo(divc2);
 		
-	var divc3 = $('<div/>', { 'class': 'buttonblock' }).appendTo(divc);
+	var divc3 = $('<div/>').appendTo(divc);
 	var ac2 = $('<a/>', { 'href': '/titles/' + obj.id }).appendTo(divc3);
 	$('<p/>').html('Читать далее').appendTo(ac2);
 }
@@ -65,8 +72,10 @@ function loadHeadTitle() {
 				var h3c = $('<h3/>').appendTo($('.main_news'));
 				var a1 = $('<a/>', { 'href': '/titles/' + obj[0].id }).html(obj[0].title).appendTo(h3c);
 				var p0 = $('<p/>').html(obj[0].shortDesc).appendTo($('.main_news'));
-	var p01 = $('<h1/>').html('&#x2764; ' + (obj[0].loyce == null ? 0 : obj[0].loyce)).appendTo(p0);
+				var divc1 = $('<div/>').appendTo(p0);
 
+				$('<h1/>').html('&#10000; ' + obj[0].comments).appendTo(divc1);
+				$('<h1/>').html('&#x2764; ' + (obj[0].loyce == null ? 0 : obj[0].loyce)).appendTo(divc1);
 			}
 		}
 	};
@@ -182,7 +191,7 @@ function logIn2() {
 				$('#mask, .window').hide();
 				$('#hProfile').show();		
 				$('#hProfile2').html(uData.name);			
-				
+			
 			}
 			else
 				$("#logInfo").html(obj.text);
@@ -230,7 +239,29 @@ function regNew() {
 	$('#psw').val('');
 	$('#logInfo').html('Для завершения регистрации введите пароль ещё раз');
 }
+function regNew2() {
+document.location.href = "/Registraion";
+}
+function register2() {
+	var uData = { "name": $("#uname").val(), "password": $("#password").val(), "phoneNum": $("#phone").val(),
+		"name1": $("#name").val(), "name2": $("#patronymic").val(), "age": $("#age").val()};
 
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			if (obj.uID > -1) {
+				showLogOut(uData.name, $("#loginarea"));
+				$("#sendBtn").attr("disabled", false);
+			}
+			else
+				$("#logInfo").html(obj.text);
+		}
+	};
+	xhttp.open("POST", "/api/register", true);
+	xhttp.setRequestHeader("Content-type", "text/plain");
+	xhttp.send(JSON.stringify(uData));
+}
 function register(pwd) {
 	var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
 	if (pwd != uData.password) {
@@ -263,10 +294,6 @@ function logOut2() {
 			showLogIn($('#loginarea'));
 			$("#sendBtn").attr("disabled", true);
 			$('#modal').show();
-			$("#hExit2").hide()
-			$("#hExit").hide()
-			$('#hProfile').hide();			
-			$("#hEnter").show()	
 		}
 	};
 	xhttp.open("POST", "/api/logout", true);
@@ -276,19 +303,13 @@ function logOut() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			$("#hExit").hide()
-			$("#hExit2").hide()
-			$('#hProfile').hide();			
-
-			$("#hEnter").show()	
+			showLogIn2();
 		}
 	};
 	xhttp.open("POST", "/api/logout", true);
 	xhttp.send(null);
 }
 function myLoad(tID) {
-		var uData = { "name": $("#uname").val(), "password": $("#psw").val() };
-
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4) {
@@ -296,20 +317,9 @@ function myLoad(tID) {
 				var obj = JSON.parse(this.responseText);
 				showLogOut(obj.name, $("#loginarea"));
 				$("#sendBtn").attr("disabled", false);
-				$("#hExit").hide()
-				$("#hEnter").hide()	
-				$('#hProfile').show();			
-				$('#hProfile2').html(uData.name);	
-
-				$("#hExit2").show()
 			}
 			else {
-				$("#hExit2").hide()
-				$("#hExit").hide()
-				$("#hEnter").show()	
-				$('#hProfile').hide();			
-
-				showLogIn($('#loginarea'));
+				showLogIn2()
 			}
 		}
 	};
