@@ -93,6 +93,7 @@ display: block;margin: 0 auto;
 }
 
 #loyceBtn {
+	transition: .5s;
 
 	color:silver;
 padding-left: 2px;
@@ -101,10 +102,7 @@ padding-right: 2px;
 	cursor: pointer;
 }
 
-#loyceBtn:hover { 	
-	transition: .5s;
-
-background-color:rgba(200,200,200,0.3); text-decoration:none; }  
+#loyceBtn:hover {background-color:rgba(200,200,200,0.3); text-decoration:none;}  
 
 .comments {
 	margin-top: 15px;

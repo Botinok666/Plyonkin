@@ -45,18 +45,15 @@ body {
 	font:normal normal 16px Trebuchet MS;
 	list-style:none;
 	float:left;
+		transition-property:all;
+	transition-duration:0.1s;
+	transition-timing-function:ease-in-out, ease, ease;
  	margin:0 0 0 100px;
 }
 .menu ul li:not(.active):hover {
-	transition-property:all;
-	transition-duration:0.1s;
-	transition-timing-function:ease-in-out, ease, ease;
 	border-top:3px solid rgba(250,250,250,0.75);
 }
 .menu ul li:not(.active):not(:hover) {
-	transition-property:all;
-	transition-duration:0.1s;
-	transition-timing-function:ease-in-out, ease, ease;
 	border-top:0px solid rgba(250,250,250,0.75);
 }
 .active a {
@@ -75,6 +72,8 @@ body {
 	background-size: 24px 16px, auto;
 }
 #mc-form input[type=submit] {
+	top: -1px;
+	transition: .5s;
 	margin: 0 .3rem 1.2rem 0;
 	display: inline-block;
     font-family: OpenSans;
@@ -83,21 +82,17 @@ body {
 	text-decoration: none;
     height: 2.8rem;
 	line-height: 2.6rem;
-	padding: 0 3rem;
-	position: absolute;
-    padding: 0 15px;
+    padding: 0 16px;
 	color: #FFFFFF;
 	background: #0054a5;
 	border-color: #0054a5;
-	border-radius: 0 3px 3px 0;
+	border-radius: 0 2px 2px 0;
 	text-align: center;
 	border-radius: 3px;
 	cursor: pointer;
 	border: 0;
 }
 #mc-form input[type=submit]:hover {
-		transition: .5s;
-
    background: silver;
    border-color: silver;
 }

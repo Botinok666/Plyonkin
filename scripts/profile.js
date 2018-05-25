@@ -7,16 +7,18 @@ function showUserPicForm(elem) {
 }
 
 function showNewsUploadForm(elem) {
-	var form0 = $('<form/>', { 'action': '/uploadNews', 'enctype': 'multipart/form-data',
-		'method': 'post'}).html('Загрузка новости').appendTo(elem);
-	$(form0).append('<br>Заголовок: ');
-	var input0 = $('<input>', { 'name': 'ntitle', 'type': 'text', 'maxlength': '90' }).appendTo(form0);
-	$(form0).append('<br>Краткое содержание: ');
+	var form0 = $('<form/>', { 'action': '/uploadNews', 'class': 'form2', 'enctype': 'multipart/form-data',
+		'method': 'post'}).appendTo(elem);
+	$(form0).append('<h1>Добавление новости </h1>');
+	$(form0).append('<hr/>');
+	$(form0).append('<p>Заголовок: </p>');
+	$('<input>', { 'name': 'ntitle', 'type': 'text', 'maxlength': '90' }).appendTo(form0);
+	$(form0).append('<p>Краткое содержание: </p>');
 	var input1 = $('<input>', { 'name': 'ndescr', 'type': 'text', 'maxlength': '120' }).appendTo(form0);
-	$(form0).append('<br>Картинка новости: ');
+	$(form0).append('<p>Картинка новости: </p>');
 	var input2 = $('<input>', { 'name': 'imageUp', 'type': 'file', 
 		'accept': 'image/*' }).appendTo(form0);
-	$(form0).append('<br>Текст новости: ');
+	$(form0).append('<p>Текст новости: </p>');
 	var input3 = $('<input>', { 'name': 'ejsUp', 'type': 'file', 
 		'accept': '.ejs' }).appendTo(form0);
 	var input4 = $('<input>', { 'type': 'submit' }).appendTo(form0);
@@ -39,7 +41,9 @@ function sendtID() {
 }
 
 function showMainTitleSetForm(elem) {
-	var form0 = $('<form/>', { 'action': 'javascript:sendtID();' }).html('ID новости в заголовке: ').appendTo(elem);
+	var form0 = $('<form/>', { 'action': 'javascript:sendtID();', 'class': 'form2' }).appendTo(elem);
+	$(form0).append('<p>ID новости в заголовке: </p>');
+
 	var input0 = $('<input/>', { 'id': 'mainID', 'type': 'text' }).appendTo(form0);
 	var input1 = $('<input/>', { 'type': 'submit' }).appendTo(form0);
 }
