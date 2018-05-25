@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<!-- Basic
+		================================================== -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>IT-News - Все новости</title>
+		<!-- CSS
+		================================================== -->
+		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/main.css" rel="stylesheet" type="text/css">
+		<link href="/css/media.css" rel="stylesheet" type="text/css">
+		<!-- JS
+		================================================== -->
+		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="/scripts/pace.min.js"></script>
+		<script src="/scripts/client.js"></script>
+		<script src="/scripts/main.js"></script>
+
+				<script>
+		$(document).ready(function() {   
+			$('#modal').click(function(e) {
+			e.preventDefault();
+			var id = $(this).attr('href');
+			var maskHeight = $(document).height();
+			var maskWidth = $(window).width();
+			$('#mask').css({'width':maskWidth,'height':maskHeight});
+			$('#mask').fadeIn(900); 
+			$('#mask').fadeTo("slow",0.7); 
+			var winH = $(window).height();
+			var winW = $(window).width();
+			$(id).css('top',  winH/2-$(id).height()/2);
+			$(id).css('left', winW/2-$(id).width()/2);
+			$(id).fadeIn(1800); 
+			});
+			$('.window .close1').click(function (e) { 
+			e.preventDefault();
+			$('#mask, .window').hide();
+			}); 
+			$('#mask').click(function () {
+			$(this).hide();
+			$('.window').hide();
+			}); 
+		   });  
+		</script>
+		
+		<script>
+			var newsLoaded = 0;
+			var noMore = false;
+			function pageLoaded() {
+				document.getElementById('hall').className = 'active';
+				while (loadMore());
+				loadMore();
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {
+							var obj = JSON.parse(this.responseText);
+							$("#hExit").show()
+							$("#hExit2").hide()
+							$("#hEnter").hide()	
+							//showLogOut(obj.name, $("#hEnter"));
+						}
+						else {
+							$("#hExit").hide()
+							$("#hEnter").show()	
+							$("#hExit2").hide()
+							//showLogIn($('#hEnter'));
+							}
+					}
+				};
+				xhttp.open("POST", "/api/auth", true);
+				xhttp.send(null);
+			}
+			
+			window.onscroll = function() {loadMore()};
+			function loadMore() {
+				if (noMore) return false;
+				if (document.documentElement.getBoundingClientRect().bottom >
+					document.documentElement.clientHeight + 100) return false;
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var obj = JSON.parse(this.responseText);
+						if (obj.length > 0)
+							putPreviewTitle(obj[0], $("#leftCol"));
+						if (obj.length > 1)	
+							putPreviewTitle(obj[1], $("#rightCol"));
+						if (obj.length < 2)
+							noMore = true;
+						newsLoaded += obj.length;
+						return true;
+					}
+				};
+				xhttp.open('POST', '/load/' + newsLoaded + '-' + '2', true);
+				xhttp.send(null);				
+			}
+		</script>
+	</head>
+	<body onload='pageLoaded()' >
+		<!-- Само окно -->
+	<div id="boxes">  
+	<div id="dialog" class="window"> 
+	<div class="top"><a href="#" class="link close1"/><img src="/images/ModalClose.png"/ width="20" height="20"></a></div>
+	<div class="content2">
+		<p>Логин</p> <input type="text" id="uname"/>
+		<p>Пароль</p> <input type="password" id="psw"/>
+		<p id="logInfo"></p>
+		<input type="button" class="log" id="Login" value="Войти" onclick='logIn2()'/>
+		<input type="button" class="reg" id="Register" value="Зарегистрироваться" onclick='regNew()'/>
+	</div>
+	</div>
+	</div>
+	<!-- Маска, затемняющая фон -->
+	<div id="mask"></div>
+		<div class="logo">
+			<% include header %>
+		</div>
+		<div class="container-fluid">
+			<div class="rowMain">
+				<div id="leftCol" class="column"></div>
+				<div id="rightCol" class="column"></div>
+			</div>
+		</div>
+	</body>
+</html>

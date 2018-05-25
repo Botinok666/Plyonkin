@@ -33,6 +33,9 @@ app.use(session({
 app.get('/',function(req,res) {
     res.render('Main');
 });
+app.get('/all',function(req,res) {
+    res.render('All');
+});
 app.get('/titles/:tID', function(req, res) {
 	var sql = "SELECT news.fullDesc, news.title, news.thumbImage, users.name, " 
 		+ "(SELECT SUM(loyce) FROM loyces WHERE loyces.titleID=news.id) AS loyce "
@@ -108,7 +111,7 @@ app.post('/post/:tID', textParser, function(req, res) {
 		});
 	});
 });
-app.post('/load/:cnt', textParser, function(req, res) {
+app.post('/load/:offset-:cnt', textParser, function(req, res) {
 	var sql = "SELECT titleID FROM extraid WHERE type='Main title'";
 	pool.getConnection(function(error, con) {
 		con.query(sql, function(err, result) {
@@ -121,7 +124,7 @@ app.post('/load/:cnt', textParser, function(req, res) {
 			} else {
 				sql2 = "SELECT users.name, news.id, news.title, news.shortDesc, news.thumbImage " +
 					"FROM news LEFT JOIN users ON users.userID=news.authorID WHERE news.id<>" +
-					result[0].titleID + " ORDER BY news.id DESC LIMIT " + req.params.cnt;
+					result[0].titleID + " ORDER BY news.id DESC LIMIT " + req.params.offset + ", " + req.params.cnt;
 			}
 			con.query(sql2, function(err2, result2) {
 				con.release();

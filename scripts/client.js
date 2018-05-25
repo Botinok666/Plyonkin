@@ -56,7 +56,7 @@ function loadHeadTitle() {
 			}
 		}
 	};
-	xhttp.open("POST", "/load/0", true);
+	xhttp.open("POST", "/load/0-0", true);
 	xhttp.send(null);
 }
 
@@ -86,8 +86,8 @@ function loadMainPageTitles() {
 			var obj = JSON.parse(this.responseText);
 			if (obj.length > 0) {
 				putPreviewTitle(obj[0], $("#leftCol"));
-				putPreviewTitle(obj[1], $("#leftCol"));
-				putPreviewTitle(obj[2], $("#rightCol"));
+				putPreviewTitle(obj[1], $("#rightCol"));
+				putPreviewTitle(obj[2], $("#leftCol"));
 				putPreviewTitle(obj[3], $("#rightCol"));
 				$(document).ready(function(){
 					$('.main_news').mouseout(function(){
@@ -106,7 +106,7 @@ function loadMainPageTitles() {
 			}
 		}
 	};
-	xhttp.open("POST", "/load/" + newsCnt, true);
+	xhttp.open("POST", "/load/0-" + newsCnt, true);
 	xhttp.send(null);
 }
 
