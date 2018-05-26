@@ -10,6 +10,7 @@
 		<!-- CSS
 		================================================== -->
 		<link href="/css/base.css" rel="stylesheet" type="text/css">
+		<link href="/css/all.css" rel="stylesheet" type="text/css">
 		<link href="/css/main.css" rel="stylesheet" type="text/css">
 		<link href="/css/media.css" rel="stylesheet" type="text/css">
 		<!-- JS
@@ -31,6 +32,10 @@
 						if (this.status == 200) {
 							var obj = JSON.parse(this.responseText);
 							showLogOut2(obj.name);
+							alert(obj.accLevel);
+					if (obj.accLevel < 2) {
+					$("#addingnews").hide();
+				}
 						}
 						else {
 							showLogIn2();
@@ -91,7 +96,10 @@
 			<% include header %>
 		</div>
 		<div class="container-fluid">
+			<div id="addingnews" >			<a href="/addnews">Добавить новость</a> </div>
+
 			<div class="rowMain">
+
 				<div id="leftCol" class="column"></div>
 				<div id="middleCol" class="column"></div>
 				<div id="rightCol" class="column"></div>
