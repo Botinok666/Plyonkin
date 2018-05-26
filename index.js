@@ -45,6 +45,8 @@ app.get('/titles/:tID', function(req, res) {
 			con.release();
 			if (err)
 				console.log(err);
+			if (result == null || result.length == 0)
+				return;
 			res.render('News', {
 				title: "news/" + result[0].fullDesc,
 				tID: req.params.tID,
