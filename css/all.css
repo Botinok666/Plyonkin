@@ -1,0 +1,9 @@
+#addingnews {
+text-align:center;
+font: normal normal 18px HelveticaLight;
+margin-top:10px;
+}
+a {text-decoration:none;transition: .4s;color: #4C94DD}
+a:hover {text-decoration:none;
+color: rgb(12,12,12);
+}

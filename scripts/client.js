@@ -2,6 +2,8 @@ function showLogIn2() {
 	$('#textfield').hide();
 	$('#sendBtn').hide();
 	$("#hExit2").hide()
+	$("#addingnews").hide()
+
 	$("#hExit").hide()
 	$("#hEnter").show()	
 	$('#hProfile').hide();		
@@ -14,6 +16,8 @@ function showLogOut(uname, elem) {
 	$(elem).empty();
 	$('#modal').hide();
 	$("#hExit").hide()
+	
+	$("#addingnews").show()
 	$("#hEnter").hide()	
 	$("#hExit2").show()
 	$('#hProfile').show();		
@@ -24,7 +28,8 @@ function showLogOut2(uname) {
 	$("#hExit").hide()
 	$("#hEnter").hide()	
 	$("#hExit2").show()
-	$('#hProfile').show();		
+	$('#hProfile').show();
+	$("#addingnews").show()
 	$('#hProfile2').html(uname);	
 }
 
@@ -188,6 +193,8 @@ function logIn2() {
 				$('#hExit').show();
 				$('#hEnter').hide();
 				$('.window').hide();
+					$("#addingnews").show()
+
 				$('#mask, .window').hide();
 				$('#hProfile').show();		
 				$('#hProfile2').html(uData.name);			
@@ -241,6 +248,9 @@ function regNew() {
 }
 function regNew2() {
 document.location.href = "/Registraion";
+}
+function openAddNewsPage() {
+document.location.href = "/addnews";
 }
 function register2() {
 	if (($("#uname").val().length < 3) || ($("#password").val().length < 3) || ($("#phone").val().length < 3) 
