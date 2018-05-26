@@ -243,6 +243,11 @@ function regNew2() {
 document.location.href = "/Registraion";
 }
 function register2() {
+	if (($("#uname").val().length < 3) || ($("#password").val().length < 3) || ($("#phone").val().length < 3) 
+		|| ($("#name").val().length < 3) || ($("#patronymic").val().length < 3) || ($("#age").val().length < 2))		{
+		$("#res").html("Все поля должны быть заполнены!");
+		return;
+	}
 	var uData = { "name": $("#uname").val(), "password": $("#password").val(), "phoneNum": $("#phone").val(),
 		"name1": $("#name").val(), "name2": $("#patronymic").val(), "age": $("#age").val()};
 
@@ -261,6 +266,8 @@ function register2() {
 	xhttp.open("POST", "/api/register", true);
 	xhttp.setRequestHeader("Content-type", "text/plain");
 	xhttp.send(JSON.stringify(uData));
+		$("#res").html("Аккаунт был успешно создан!");
+
 }
 function register(pwd) {
 	var uData = { "name": $("#uname").val(), "password": $("#psw").val() };

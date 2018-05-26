@@ -140,7 +140,7 @@ fieldset{
   transform: scale(1, 1);
 }
 
-.form-wrapper .button, .form-wrapper .submit{
+#butreg, .form-wrapper .button, .form-wrapper .submit{
 	right: 40px;
 bottom: 0px;
   background-color: #3498db;
@@ -153,7 +153,7 @@ bottom: 0px;
   position: absolute;
 }
 
-.form-wrapper .submit{
+#butreg, .form-wrapper .submit {
   border: none;
   outline: none;
   -webkit-box-sizing: content-box;
@@ -216,12 +216,4 @@ bottom: 0px;
 .form-wrapper input[type="radio"] + label h4{
   margin: 15px;
   color: #ccc;
-}
-
-.form-wrapper input[type="radio"]:checked + label{
-  border: 1px solid #3498db;
-}
-
-.form-wrapper input[type="radio"]:checked + label h4{
-  color: #3498db;
 }
