@@ -242,7 +242,22 @@ app.post('/api/logout', login.unauth, function(req, res) {
 	res.sendStatus(200);
 });
 app.post('/api/auth', login.auth, function(req, res) {
-    res.send(JSON.stringify({ "uID": req.session.uID, "name": req.session.name }));
+		var sql = 'SELECT accLevel FROM users WHERE userID=?';
+
+    //res.send(JSON.stringify({ "uID": req.session.uID, "name": req.session.name }));
+		pool.getConnection(function(error, con) {
+		con.query(sql, [req.session.uID], function(err, result) {
+			con.release();
+			if (err)
+				console.log(err);
+			textRet = JSON.stringify({
+				"uID": req.session.uID,
+				"name": req.session.name,
+				"accLevel": result[0].accLevel });
+			res.type('text/plain');
+			res.send(textRet);
+		});
+	});
 });
 app.post('/api/params', login.auth, textParser, function(req, res) {
 	var uparams = JSON.parse(req.body);

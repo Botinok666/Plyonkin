@@ -41,7 +41,7 @@ login: function(req, res) {
 	var udata = JSON.parse(req.body);
 	pool.getConnection(function(error, con) {
 		var rtext = { uID: -1, text: "" };
-		var sql = 'SELECT userID, password FROM users WHERE name=?';
+		var sql = 'SELECT userID, password, accLevel FROM users WHERE name=?';
 		con.query(sql, [udata.name], function(err, result) {
 			if (err)
 				console.log(err);
@@ -57,7 +57,10 @@ login: function(req, res) {
 							rtext.text = "Вход выполнен";
 							rtext.uID = result[0].userID;
 							req.session.uID = result[0].userID; //Добавим информацию о юзере в сессию
-							req.session.name = udata.name;
+							req.session.accLevel = result[0].accLevel;
+							rtext.accLevel = result[0].accLevel;
+														req.session.name = udata.name;
+
 							req.session.token = insertToken(result[0].userID); //Токен - случайное число
 							res.send(JSON.stringify(rtext));
 						});

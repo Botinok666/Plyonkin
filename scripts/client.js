@@ -16,7 +16,6 @@ function showLogOut(uname, elem) {
 	$(elem).empty();
 	$('#modal').hide();
 	$("#hExit").hide()
-	
 	$("#addingnews").show()
 	$("#hEnter").hide()	
 	$("#hExit2").show()
@@ -193,6 +192,9 @@ function logIn2() {
 				$('#hExit').show();
 				$('#hEnter').hide();
 				$('.window').hide();
+				if (obj.accLevel < 2)
+					$("#addingnews").hide();
+				else	
 					$("#addingnews").show()
 
 				$('#mask, .window').hide();
@@ -225,6 +227,10 @@ function logIn(tID) {
 				$('#sendBtn').show();
 				$('.window').hide();
 				$('#mask, .window').hide();
+						if (obj.accLevel < 2)
+						$("#addingnews").hide();
+				else	
+					$("#addingnews").show()		
 				getLoyce(tID);
 			}
 			else
