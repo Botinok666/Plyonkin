@@ -25,7 +25,7 @@
 			function pageLoaded() {
 				document.getElementById('hall').className = 'active';
 				//while (loadMore());
-				loadMore(true);
+
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4) {
@@ -40,6 +40,7 @@
 						else {
 							showLogIn2();
 						}
+						loadMore(true);						
 					}
 				};
 				xhttp.open("POST", "/api/auth", true);
@@ -61,14 +62,14 @@
 							putPreviewTitle(obj[1], $("#middleCol"));
 						if (obj.length > 2)	
 							putPreviewTitle(obj[2], $("#rightCol"));
-						if (obj.length < 1)
+						if (obj.length < 3)
 							noMore = true;
 						newsLoaded += obj.length;
 						if (preload == true)
 							loadMore(true);
 					}
 				};
-				xhttp.open('POST', '/load/' + newsLoaded + '-' + '3', true);
+				xhttp.open('POST', '/load/' + newsLoaded + '-3', true);
 				xhttp.send(null);
 			}
 		</script>
