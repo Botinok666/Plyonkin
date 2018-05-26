@@ -20,7 +20,7 @@
 		<script src="/scripts/main.js"></script>
 		<script>
 			var newsLoaded = 0;
-			var noMore = false;
+			var noMore = false, isLoading = false;
 			function pageLoaded() {
 				document.getElementById('hall').className = 'active';
 				//while (loadMore());
@@ -44,9 +44,10 @@
 			
 			window.onscroll = function() {loadMore(false)};
 			function loadMore(preload) {
-				if (noMore) return false;
+				if (noMore || isLoading) return false;
 				if (document.documentElement.getBoundingClientRect().bottom >
 					document.documentElement.clientHeight + 100) return false;
+				isLoading = true;
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
@@ -60,6 +61,7 @@
 						if (obj.length < 3)
 							noMore = true;
 						newsLoaded += obj.length;
+						isLoading = false;
 						if (preload == true)
 							loadMore(true);
 					}
