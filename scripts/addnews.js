@@ -1,11 +1,3 @@
-function showUserPicForm(elem) {
-	var form0 = $('<form/>', { 'action': '/uploadPic', 'enctype': 'multipart/form-data',
-		'method': 'post'}).html('Выберите картинку для профиля: ').appendTo(elem);
-	var input0 = $('<input>', { 'type': 'file', 'name': 'imageUp',
-		'accept': 'image/*' }).appendTo(form0);
-	var input1 = $('<input>', { 'type': 'submit' }).appendTo(form0);
-}
-
 function showNewsUploadForm(elem) {
 	var form0 = $('<form/>', { 'action': '/uploadNews', 'class': 'form2', 'style': "padding-bottom: 15px;", 'enctype': 'multipart/form-data',
 		'method': 'post'}).appendTo(elem);
@@ -21,6 +13,7 @@ function showNewsUploadForm(elem) {
 	$(form0).append('<p>Текст новости: </p>');
 	var input3 = $('<input>', { 'name': 'ejsUp', 'type': 'file', 
 		'accept': '.ejs' }).appendTo(form0);
+	$(form0).append('<hr/>');
 	var input4 = $('<input>', { 'type': 'submit', 'value':'Добавить новость' }).appendTo(form0);
 }
 
@@ -63,6 +56,6 @@ function pLoad() {
 			}
 		}
 	};
-	xhttp.open("POST", "/api/profile", true);
+	xhttp.open("POST", "/api/addnews", true);
 	xhttp.send(null);
 }

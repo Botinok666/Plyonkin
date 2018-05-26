@@ -1,27 +1,11 @@
 function showUserPicForm(elem) {
 	var form0 = $('<form/>', { 'action': '/uploadPic', 'enctype': 'multipart/form-data',
-		'method': 'post'}).html('Выберите картинку для профиля: ').appendTo(elem);
+		'method': 'post'}).appendTo(elem);
+	$(form0).append('<h1>Выберите картинку для профиля</h1>');
+
 	var input0 = $('<input>', { 'type': 'file', 'name': 'imageUp',
 		'accept': 'image/*' }).appendTo(form0);
-	var input1 = $('<input>', { 'type': 'submit' }).appendTo(form0);
-}
-
-function showNewsUploadForm(elem) {
-	var form0 = $('<form/>', { 'action': '/uploadNews', 'class': 'form2', 'style': "padding-bottom: 15px;", 'enctype': 'multipart/form-data',
-		'method': 'post'}).appendTo(elem);
-	$(form0).append('<h1>Добавление новости </h1>');
-	$(form0).append('<hr/>');
-	$(form0).append('<p>Заголовок: </p>');
-	$('<input>', { 'name': 'ntitle', 'type': 'text', 'maxlength': '90' }).appendTo(form0);
-	$(form0).append('<p>Краткое содержание: </p>');
-	var input1 = $('<input>', { 'name': 'ndescr', 'type': 'text', 'maxlength': '120' }).appendTo(form0);
-	$(form0).append('<p>Картинка новости: </p>');
-	var input2 = $('<input>', { 'name': 'imageUp', 'type': 'file', 
-		'accept': 'image/*' }).appendTo(form0);
-	$(form0).append('<p>Текст новости: </p>');
-	var input3 = $('<input>', { 'name': 'ejsUp', 'type': 'file', 
-		'accept': '.ejs' }).appendTo(form0);
-	var input4 = $('<input>', { 'type': 'submit', 'value':'Добавить новость' }).appendTo(form0);
+	var input1 = $('<input>', { 'type': 'submit', 'value':"Изменить картинку" }).appendTo(form0);
 }
 
 function sendtID() {
@@ -42,10 +26,12 @@ function sendtID() {
 
 function showMainTitleSetForm(elem) {
 	var form0 = $('<form/>', { 'action': 'javascript:sendtID();', 'class': 'form2' }).appendTo(elem);
+		$(form0).append('<h1>Выберите основную новость для главной страницы</h1>');
+
 	$(form0).append('<p>ID новости в заголовке: </p>');
 
 	var input0 = $('<input/>', { 'id': 'mainID', 'type': 'text' }).appendTo(form0);
-	var input1 = $('<input/>', { 'type': 'submit' }).appendTo(form0);
+	var input1 = $('<input/>', { 'type': 'submit', 'value':"Изменить новость" }).appendTo(form0);
 }
 
 function pLoad() {
@@ -54,11 +40,10 @@ function pLoad() {
 		if (this.readyState == 4) {
 			if (this.status == 200) {
 				var obj = JSON.parse(this.responseText);
-				//showUserPicForm($('#tContent'));
+				showUserPicForm($('#tContent'));
 				if (obj.accLevel == 2) {
-					//var br = $('<br>').appendTo($('#tContent'));
-					showNewsUploadForm($('#tContent'));
-					//showMainTitleSetForm($('#tContent'));
+					var br = $('<hr/>').appendTo($('#tContent'));
+					showMainTitleSetForm($('#tContent'));
 				}
 			}
 		}

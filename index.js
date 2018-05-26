@@ -65,7 +65,16 @@ app.get('/feedback', function(req, res) {
     res.render('Feedback');
 });
 app.get('/addnews', function(req, res) {
-    res.render('AddNews');
+	var result = 'null';
+	if (req.query.result != null)
+		result = req.query.result;
+    res.render('addnews', { ulStatus: result },
+	function(errs, thtml) {
+		if (errs)
+			console.log(errs);
+		else
+			res.send(thtml);
+	});
 });
 app.get('/registraion', function(req, res) {
     res.render('Registraion');
@@ -74,7 +83,7 @@ app.get('/profile', function(req, res) {
 	var result = 'null';
 	if (req.query.result != null)
 		result = req.query.result;
-    res.render('Profile', { ulStatus: result },
+    res.render('profile', { ulStatus: result },
 	function(errs, thtml) {
 		if (errs)
 			console.log(errs);
@@ -184,21 +193,21 @@ app.post('/uploadNews', function(req, res) {
 	form.parse(req, function(err, fields, files) {
 		if (err || files.imageUp.name.length < 4 || files.ejsUp.name.length < 4
 			|| fields.ndescr.length < 4 || fields.ntitle.length < 4) {
-			res.redirect('/Profile?result=false');
+			res.redirect('/AddNews?result=false');
 			return;
 		}
 		fs.rename(files.ejsUp.path, './views/news/' + files.ejsUp.name, function(error) {
 			if (error)
 			{
 				console.log(error);
-				res.redirect('/Profile?result=false');
+				res.redirect('/AddNews?result=false');
 				return;
 			}
 			fs.rename(files.imageUp.path, './images/' + files.imageUp.name, function(err2) {
 				if (err2)
 				{
 					console.log(err2);
-					res.redirect('/Profile?result=false');
+					res.redirect('/AddNews?result=false');
 					return;
 				}
 				var sql = "INSERT INTO news (authorID, title, shortDesc, fullDesc, thumbImage) " +
@@ -210,11 +219,11 @@ app.post('/uploadNews', function(req, res) {
 						con.release();
 						if (errs) {
 							console.log(errs);
-							res.redirect('/Profile?result=false');
+							res.redirect('/AddNews?result=false');
 						}
 						else
 						{
-							res.redirect('/Profile?result=true');
+							res.redirect('/AddNews?result=true');
 							smtp.notify(fields.ntitle, result.insertId);
 						}
 					});
@@ -264,6 +273,22 @@ app.post('/api/params', login.auth, textParser, function(req, res) {
 	}
 });
 app.post('/api/profile', login.auth, function(req, res) {
+	var sql = 'SELECT accLevel FROM users WHERE userID=?';
+	pool.getConnection(function(error, con) {
+		con.query(sql, [req.session.uID], function(err, result) {
+			con.release();
+			if (err)
+				console.log(err);
+			textRet = JSON.stringify({
+				"uID": req.session.uID,
+				"name": req.session.name,
+				"accLevel": result[0].accLevel });
+			res.type('text/plain');
+			res.send(textRet);
+		});
+	});
+});
+app.post('/api/AddNews', login.auth, function(req, res) {
 	var sql = 'SELECT accLevel FROM users WHERE userID=?';
 	pool.getConnection(function(error, con) {
 		con.query(sql, [req.session.uID], function(err, result) {
